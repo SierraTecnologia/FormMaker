@@ -1,8 +1,8 @@
 <?php
 
-namespace Grafite\FormMaker\Generators;
+namespace SierraTecnologia\FormMaker\Generators;
 
-use Grafite\FormMaker\Services\InputCalibrator;
+use SierraTecnologia\FormMaker\Services\InputCalibrator;
 
 /**
  * Generate the CRUD.

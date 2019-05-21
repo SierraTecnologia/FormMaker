@@ -1,5 +1,5 @@
 {
-    "name": "grafite/formmaker",
+    "name": "sierratecnologia/formmaker",
     "description": "A remarkably magical form and input maker tool for Laravel.",
     "license": "MIT",
     "authors": [
@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Grafite\\FormMaker\\": "src/"
+            "SierraTecnologia\\FormMaker\\": "src/"
         },
         "files": [
           "src/Helpers/form_maker.php",
@@ -38,7 +38,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Grafite\\FormMaker\\FormMakerProvider"
+                "SierraTecnologia\\FormMaker\\FormMakerProvider"
             ]
         }
     },

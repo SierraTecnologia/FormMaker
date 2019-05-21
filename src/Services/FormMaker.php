@@ -1,6 +1,6 @@
 <?php
 
-namespace Grafite\FormMaker\Services;
+namespace SierraTecnologia\FormMaker\Services;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;

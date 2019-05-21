@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Eloquent\Model;
-use Grafite\FormMaker\Services\InputMaker;
+use SierraTecnologia\FormMaker\Services\InputMaker;
 
 class User extends Model
 {

@@ -2,10 +2,10 @@
 
 **FormMaker** - A remarkably magical form and input maker tool for Laravel.
 
-[![Build Status](https://travis-ci.org/GrafiteInc/FormMaker.svg?branch=master)](https://travis-ci.org/GrafiteInc/FormMaker)
-[![Maintainability](https://api.codeclimate.com/v1/badges/8c00a046fec32d8b8ac7/maintainability)](https://codeclimate.com/github/GrafiteInc/FormMaker/maintainability)
-[![Packagist](https://img.shields.io/packagist/dt/grafite/formmaker.svg)](https://packagist.org/packages/grafite/formmaker)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/grafite/formmaker)
+[![Build Status](https://travis-ci.org/SierraTecnologiaInc/FormMaker.svg?branch=master)](https://travis-ci.org/SierraTecnologiaInc/FormMaker)
+[![Maintainability](https://api.codeclimate.com/v1/badges/8c00a046fec32d8b8ac7/maintainability)](https://codeclimate.com/github/SierraTecnologiaInc/FormMaker/maintainability)
+[![Packagist](https://img.shields.io/packagist/dt/sierratecnologia/formmaker.svg)](https://packagist.org/packages/sierratecnologia/formmaker)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/sierratecnologia/formmaker)
 
 The FormMaker package provides a set of tools for generating HTML forms with as little as 1 line of code. Don't want to write boring HTML, neither do we. The FormMaker will generate error containers, all fields defined by either the table or object column types, or if you prefer to have more control define a config. In the case that you want to write more than 1 line of code, FormMaker comes with the InputMaker service as well. With the InputMaker you can create any form of input, including html for Eloquent relationships.
 
@@ -34,18 +34,18 @@ composer create-project laravel/laravel your-project-name
 
 Then run the following to add FormMaker
 ```php
-composer require "grafite/formmaker"
+composer require "sierratecnologia/formmaker"
 ```
 
 Time to publish those assets!
 ```php
-php artisan vendor:publish --provider="Grafite\FormMaker\FormMakerProvider"
+php artisan vendor:publish --provider="SierraTecnologia\FormMaker\FormMakerProvider"
 ```
 
 ## Documentation
 
-[https://docs.grafite.ca/others/form_maker](https://docs.grafite.ca/others/form_maker)<br>
-[https://docs.grafite.ca/others/input_maker](https://docs.grafite.ca/others/input_maker)
+[https://docs.sierratecnologia.ca/others/form_maker](https://docs.sierratecnologia.ca/others/form_maker)<br>
+[https://docs.sierratecnologia.ca/others/input_maker](https://docs.sierratecnologia.ca/others/input_maker)
 
 ## License
 FormMaker is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)

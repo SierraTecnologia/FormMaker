@@ -1,6 +1,6 @@
 <?php
 
-namespace Grafite\FormMaker\Services;
+namespace SierraTecnologia\FormMaker\Services;
 
 /**
  * Input Calibration.
