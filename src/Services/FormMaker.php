@@ -2,11 +2,10 @@
 
 namespace SierraTecnologia\FormMaker\Services;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\View;
+use SierraTecnologia\FormMaker\Services\FieldMaker;
+use SierraTecnologia\FormMaker\Services\FormAssets;
 
 /**
  * FormMaker helper to make table and object form mapping easy.
@@ -15,37 +14,23 @@ class FormMaker
 {
     protected $columns = 1;
 
-    protected $inputMaker;
+    protected $sections = [];
 
-    protected $inputCalibrator;
+    protected $orientation;
+
+    protected $fieldMaker;
 
     public $connection;
 
-    protected $columnTypes = [
-        'integer',
-        'string',
-        'datetime',
-        'date',
-        'float',
-        'binary',
-        'blob',
-        'boolean',
-        'datetimetz',
-        'time',
-        'array',
-        'json_array',
-        'object',
-        'decimal',
-        'bigint',
-        'smallint',
-        'relationship',
-    ];
-
     public function __construct()
     {
-        $this->inputMaker = new InputMaker();
-        $this->inputCalibrator = new InputCalibrator();
+        $this->fieldMaker = app(FieldMaker::class);
+        $this->formAssets = app(FormAssets::class);
         $this->connection = config('database.default');
+
+        if (is_null($this->orientation)) {
+            $this->orientation = config('form-maker.form.orientation', 'vertical');
+        }
     }
 
     /**
@@ -73,340 +58,241 @@ class FormMaker
     }
 
     /**
+     * Set the sections of the form
+     *
+     * @param array $sections
+     */
+    public function setSections($sections)
+    {
+        $this->sections = $sections;
+
+        return $this;
+    }
+
+    /**
+     * Set the columns of the form
+     *
+     * @param int $columns
+     */
+    public function setOrientation($orientation)
+    {
+        $this->fieldMaker->orientation = $orientation;
+
+        return $this;
+    }
+
+    /**
      * Generate a form from a table.
      *
-     * @param string $table           Table name
-     * @param array  $columns         Array of columns and details regarding them see config/forms.php for examples
-     * @param string $class           Class names to be given to the inputs
-     * @param string $view            View to use - for custom form layouts
-     * @param bool   $reformatted     Corrects the table column names to clean words if no columns array provided
-     * @param bool   $populated       Populates the inputs with the column names as values
-     * @param bool   $idAndTimestamps Allows id and Timestamp columns
+     * @param string $table Table name
+     * @param array  $fields Field configs
      *
      * @return string
      */
-    public function fromTable(
-        $table,
-        $columns = null,
-        $class = null,
-        $view = null,
-        $reformatted = true,
-        $populated = false,
-        $idAndTimestamps = false
-    ) {
-        $formBuild = [];
+    public function fromTable($table, $fields = [])
+    {
+        $fieldCollection = [];
 
-        if (is_null($class)) {
-            $class = config('form-maker.forms.form-class', 'form-control');
+        if (empty($fields)) {
+            $fields = $this->getTableAsFields($table);
         }
 
-        $tableColumns = $this->getTableColumns($table, true);
-        if (is_null($columns)) {
-            foreach ($tableColumns as $column => $value) {
-                $columns[$column] = $value['type'];
-            }
-        }
+        $fields = $this->cleanupIdAndTimeStamps($fields);
 
-        if (!$idAndTimestamps) {
-            unset($columns['id']);
-            unset($columns['created_at']);
-            unset($columns['updated_at']);
-            unset($columns['deleted_at']);
-        }
-
-        foreach ($columns as $column => $columnConfig) {
+        foreach ($fields as $column => $columnConfig) {
             if (is_numeric($column)) {
                 $column = $columnConfig;
             }
 
-            $errors = $this->getFormErrors();
-            $input = $this->inputMaker->create($column, $columnConfig, $column, $class, $reformatted, $populated);
-            $formBuild[] = $this->formBuilder($view, $errors, $columnConfig, $column, $input);
+            $this->setAssets($columnConfig);
+
+            $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig);
         }
 
-        return $this->buildUsingColumns($formBuild, config('form-maker.form.theme'));
+        return $this->buildUsingColumns($fieldCollection);
     }
 
     /**
-     * Build the form from an array.
+     * Generate a form from just the fields.
      *
-     * @param array  $array
-     * @param array  $columns
-     * @param string $view        A template to use for the rows
-     * @param string $class       Default input class
-     * @param bool   $populated   Is content populated
-     * @param bool   $reformatted Are column names reformatted
-     * @param bool   $timestamps  Are the timestamps available?
+     * @param string $table Table name
+     * @param array  $fields Field configs
      *
      * @return string
      */
-    public function fromArray(
-        $array,
-        $columns = null,
-        $view = null,
-        $class = null,
-        $populated = true,
-        $reformatted = false,
-        $timestamps = false
-    ) {
-        $formBuild = [];
+    public function fromFields($fields = [])
+    {
+        $fieldCollection = [];
 
-        if (is_null($class)) {
-            $class = config('form-maker.forms.form-class', 'form-control');
-        }
-
-        $array = $this->cleanupIdAndTimeStamps($array, $timestamps, false);
-        $errors = $this->getFormErrors();
-
-        if (is_null($columns)) {
-            $columns = $array;
-        }
-
-        foreach ($columns as $column => $columnConfig) {
+        foreach ($fields as $column => $columnConfig) {
             if (is_numeric($column)) {
-                $column = $columnConfig;
-            }
-            if ($column === 'id') {
-                $columnConfig = ['type' => 'hidden'];
+                $column = array_key_first($columnConfig);
+                $columnConfig = $columnConfig[$column];
             }
 
-            $input = $this->inputMaker->create($column, $columnConfig, $array, $class, $reformatted, $populated);
-            $formBuild[] = $this->formBuilder($view, $errors, $columnConfig, $column, $input);
+            $this->setAssets($columnConfig);
+
+            $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig);
         }
 
-        return $this->buildUsingColumns($formBuild, config('form-maker.form.theme'));
+        return $this->buildUsingColumns($fieldCollection);
     }
 
     /**
-     * Build the form from the an object.
+     * Build the form from an object.
      *
-     * @param object $object      An object to base the form off
-     * @param array  $columns     Columns desired and specified
-     * @param string $view        A template to use for the rows
-     * @param string $class       Default input class
-     * @param bool   $populated   Is content populated
-     * @param bool   $reformatted Are column names reformatted
-     * @param bool   $timestamps  Are the timestamps available?
+     * @param object $object An object to base the form off
+     * @param array  $fields Field configs
      *
      * @return string
      */
-    public function fromObject(
-        $object,
-        $columns = null,
-        $view = null,
-        $class = null,
-        $populated = true,
-        $reformatted = false,
-        $timestamps = false
-    ) {
-        $formBuild = [];
+    public function fromObject($object, $fields = [])
+    {
+        $fieldCollection = [];
 
-        if (is_null($columns)) {
-            $columns = is_array($object['attributes']) ? array_keys($object['attributes']) : [];
+        if (empty($fields)) {
+            $fields = is_array($object['attributes']) ? array_keys($object['attributes']) : [];
         }
 
-        if (is_null($class)) {
-            $class = config('form-maker.forms.form-class', 'form-control');
-        }
-
-        $columns = $this->cleanupIdAndTimeStamps($columns, $timestamps, false);
-        $errors = $this->getFormErrors();
-
-        foreach ($columns as $column => $columnConfig) {
+        foreach ($fields as $column => $columnConfig) {
             if (is_numeric($column)) {
                 $column = $columnConfig;
             }
+
             if ($column === 'id') {
-                $columnConfig = ['type' => 'hidden'];
+                $columnConfig = [
+                    'type' => 'hidden'
+                ];
             }
-            $input = $this->inputMaker->create($column, $columnConfig, $object, $class, $reformatted, $populated);
-            $formBuild[] = $this->formBuilder($view, $errors, $columnConfig, $column, $input);
+
+            $this->setAssets($columnConfig);
+
+            $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig, $object);
         }
 
-        return $this->buildUsingColumns($formBuild, config('form-maker.form.theme'));
+        return $this->buildUsingColumns($fieldCollection);
     }
 
     /**
      * Cleanup the ID and TimeStamp columns.
      *
-     * @param array $collection
-     * @param bool  $timestamps
-     * @param bool  $id
+     * @param array $columns
      *
      * @return array
      */
-    public function cleanupIdAndTimeStamps($collection, $timestamps, $id)
+    public function cleanupIdAndTimeStamps($columns)
     {
-        if (!$timestamps) {
-            unset($collection['created_at']);
-            unset($collection['updated_at']);
-        }
+        unset($columns['id']);
+        unset($columns['created_at']);
+        unset($columns['updated_at']);
+        unset($columns['deleted_at']);
 
-        if (!$id) {
-            unset($collection['id']);
-        }
-
-        return $collection;
+        return $columns;
     }
 
     /**
-     * Get form errors.
-     *
-     * @return mixed
-     */
-    public function getFormErrors()
-    {
-        $errors = null;
-
-        if (Session::isStarted()) {
-            $errors = Session::get('errors');
-        }
-
-        return $errors;
-    }
-
-    /**
-     * Constructs HTML forms.
-     *
-     * @param string       $view   View template
-     * @param array|object $errors
-     * @param array        $field  Array of field values
-     * @param string       $column Column name
-     * @param string       $input  Input string
-     *
-     * @return string
-     */
-    private function formBuilder($view, $errors, $field, $column, $input)
-    {
-        $formGroupClass = config('form-maker.form.group-class', 'form-group');
-        $formErrorClass = config('form-maker.form.error-class', 'has-error');
-
-        $errorHighlight = '';
-        $errorMessage = false;
-
-        if (!empty($errors) && $errors->has($column)) {
-            $errorHighlight = ' '.$formErrorClass;
-            $errorMessage = $errors->get($column);
-        }
-
-        if (is_null($view)) {
-            $formBuild = '<div class="'.$formGroupClass.' '.$errorHighlight.'">';
-            $formBuild .= $this->formContentBuild($field, $column, $input, $errorMessage);
-            $formBuild .= '</div>';
-        } else {
-            $formBuild = View::make($view, [
-                'labelFor' => ucfirst($column),
-                'label' => $this->columnLabel($field, $column),
-                'input' => $input,
-                'field' => $field,
-                'errorMessage' => $this->errorMessage($errorMessage),
-                'errorHighlight' => $errorHighlight,
-            ]);
-        }
-
-        return $formBuild;
-    }
-
-    /**
-     * Form Content Builder.
-     *
-     * @param array  $field        Array of field values
-     * @param string $column       Column name
-     * @param string $input        Input string
-     * @param string $errorMessage
-     *
-     * @return string
-     */
-    public function formContentBuild($field, $column, $input, $errorMessage)
-    {
-        $labelColumn = $labelCheckableColumn = '';
-        $singleLineCheckType = false;
-        $formLabelClass = config('form-maker.form.label-class', 'control-label');
-
-        if (config('form-maker.form.orientation') == 'horizontal') {
-            $labelColumn = config('form-maker.form.label-column');
-            $labelCheckableColumn = config('form-maker.form.checkbox-column');
-            $singleLineCheckType = true;
-        }
-
-        $name = ucfirst($this->inputCalibrator->getName($column, $field));
-
-        $formBuild = '<label class="'.trim($formLabelClass.' '.$labelColumn).'" for="'.$name.'">';
-        $formBuild .= $this->inputCalibrator->cleanString($this->columnLabel($field, $column));
-        $formBuild .= '</label>'.$input.$this->errorMessage($errorMessage);
-
-        if (isset($field['type'])) {
-            if (in_array($field['type'], ['radio', 'checkbox'])) {
-                $formBuild = '<div class="'.$field['type'].'">';
-                if ($singleLineCheckType) {
-                    $formBuild .= '<div class="'.$labelCheckableColumn.'">';
-                }
-                $formBuild .= '<label for="'.ucfirst($column).'" class="'.$formLabelClass.'">'.$input;
-                $formBuild .= $this->inputCalibrator->cleanString($this->columnLabel($field, $column));
-                $formBuild .= '</label>'.$this->errorMessage($errorMessage).'</div>';
-                if ($singleLineCheckType) {
-                    $formBuild .= '</div>';
-                }
-            } elseif (stristr($field['type'], 'hidden')) {
-                $formBuild = $input;
-            }
-        }
-
-        return $formBuild;
-    }
-
-    /**
-     * Generate the HTML for a 'themed' (e.g. two column) form using the existing array of form elements
+     * Build based on the columns wanted
      *
      * @param array  $formBuild
      * @param string $columns
      *
      * @return string
      */
-    private function buildUsingColumns($formBuild, $columns = 'default')
+    private function buildUsingColumns($formBuild)
     {
-        $columns = $this->columns;
-
-        if ($columns == 'default') {
-            $columns = 1;
-        }
-
-        if ($columns == 'bootstrap-two-col') {
-            $columns = 2;
-        }
-
-        switch ($columns) {
+        switch ($this->columns) {
             case 1:
                 return implode("", $formBuild);
             case 2:
-                return $this->buildBootstrapColumnForm($formBuild, 2);
+                return $this->buildColumnForm($formBuild, 2);
             case 3:
-                return $this->buildBootstrapColumnForm($formBuild, 3);
+                return $this->buildColumnForm($formBuild, 3);
             case 4:
-                return $this->buildBootstrapColumnForm($formBuild, 4);
+                return $this->buildColumnForm($formBuild, 4);
             case 6:
-                return $this->buildBootstrapColumnForm($formBuild, 6);
+                return $this->buildColumnForm($formBuild, 6);
+            case 'sections':
+                return $this->buildColumnForm($formBuild, null);
             default:
                 return implode("", $formBuild);
         }
     }
 
     /**
-     * Build a two column form using standard bootstrap classes
+     * Set the assets of the form for render
      *
-     * @param  array $formBuild
+     * @param array $columnConfig
+     * @return void
+     */
+    public function setAssets($columnConfig)
+    {
+        if (isset($columnConfig['assets'])) {
+            $this->formAssets->addJs($columnConfig['assets']['js'] ?? '');
+            $this->formAssets->addStyles($columnConfig['assets']['styles'] ?? '');
+            $this->formAssets->addScripts($columnConfig['assets']['scripts'] ?? []);
+            $this->formAssets->addStylesheets($columnConfig['assets']['stylesheets'] ?? []);
+        }
+    }
+
+    /**
+     * Get table columns as fields
+     *
+     * @param string $table
+     *
+     * @return array
+     */
+    public function getTableAsFields($table)
+    {
+        $fields = [];
+
+        $tableColumns = $this->getTableColumns($table, true);
+
+        $tableColumns = $this->cleanupIdAndTimeStamps($tableColumns);
+
+        foreach ($tableColumns as $column => $value) {
+            $fields[$column] = [
+                'type' => $this->getNormalizedType($value['type'])
+            ];
+        }
+
+        return $fields;
+    }
+
+    /**
+     * Build a section of fields
+     *
+     * @param array $fields
+     * @param int|null $columns
+     * @param string $label
      * @return string
      */
-    private function buildBootstrapColumnForm($formBuild, $columns)
+    private function buildSection($fields, $columns, $label = null)
     {
         $newFormBuild = [];
-        $formChunks = array_chunk($formBuild, $columns);
-        $class = 'col-md-'.(12 / $columns);
+
+        if (is_null($columns)) {
+            $columns = count($fields);
+        }
+
+        $formChunks = array_chunk($fields, $columns);
+
+        $columnBase = config('form-maker.sections.column-base', 'col-md-');
+        $rowClass = config('form-maker.sections.row-class', 'row');
+        $fullSizeColumn = config('form-maker.sections.full-size-column', 'col-md-12');
+        $headerSpacing = config('form-maker.sections.header-spacing', 'mt-2 mb-2');
+
+        $class = $columnBase . (12 / $columns);
+
+        if (!is_null($label)) {
+            $newFormBuild[] = '<div class="' . $rowClass . '">';
+            $newFormBuild[] = '<div class="' . $fullSizeColumn . '"><h4 class="' . $headerSpacing . '">' . $label . '</h4><hr></div>';
+            $newFormBuild[] = '</div>';
+        }
 
         foreach ($formChunks as $chunk) {
-            $newFormBuild[] = '<div class="row">';
+            $newFormBuild[] = '<div class="' . $rowClass . '">';
             foreach ($chunk as $element) {
-                $newFormBuild[] = '<div class="'.$class.'">';
+                $newFormBuild[] = '<div class="' . $class . '">';
                 $newFormBuild[] = $element;
                 $newFormBuild[] = '</div>';
             }
@@ -417,38 +303,33 @@ class FormMaker
     }
 
     /**
-     * Generate the error message for the input.
+     * Build a two column form using standard bootstrap classes
      *
-     * @param string $message Error message
-     *
+     * @param  array $formBuild
+     * @param  int $columns
      * @return string
      */
-    private function errorMessage($message)
+    private function buildColumnForm($formBuild, $columns)
     {
-        if (!$message) {
-            $realErrorMessage = '';
-        } else {
-            $realErrorMessage = '<div><p class="text-danger">'.$message[0].'</p></div>';
+        $formSections = [];
+
+        foreach ($this->sections as $section => $fields) {
+            $label = null;
+
+            if (is_string($section)) {
+                $label = $section;
+            }
+
+            $inputs = [];
+
+            foreach ($fields as $field) {
+                $inputs[] = $formBuild[$field];
+            }
+
+            $formSections[] = $this->buildSection($inputs, $columns, $label);
         }
 
-        return $realErrorMessage;
-    }
-
-    /**
-     * Create the column label.
-     *
-     * @param array  $field  Field from Column Array
-     * @param string $column Column name
-     *
-     * @return string
-     */
-    private function columnLabel($field, $column)
-    {
-        if (!is_array($field) && !in_array($field, $this->columnTypes)) {
-            return ucfirst($field);
-        }
-
-        return (isset($field['alt_name'])) ? $field['alt_name'] : ucfirst($column);
+        return implode("", $formSections);
     }
 
     /**
@@ -472,12 +353,34 @@ class FormMaker
         foreach ($tableColumns as $column) {
             if (!in_array($column, $badColumns)) {
                 $type = DB::connection($this->connection)
-                    ->getDoctrineColumn(DB::connection($this->connection)->getTablePrefix().$table, $column)
+                    ->getDoctrineColumn(DB::connection($this->connection)->getTablePrefix() . $table, $column)
                     ->getType()->getName();
                 $tableTypeColumns[$column]['type'] = $type;
             }
         }
 
         return $tableTypeColumns;
+    }
+
+    public function getNormalizedType($type)
+    {
+        $columnTypes = [
+            'number' => 'number',
+            'smallint' => 'number',
+            'integer' => 'number',
+            'bigint' => 'number',
+            'float' => 'decimal',
+            'decimal' => 'decimal',
+            'boolean' => 'number',
+            'string' => 'text',
+            'guid' => 'text',
+            'text' => 'textarea',
+            'date' => 'date',
+            'datetime' => 'datetime-local',
+            'datetimetz' => 'datetime-local',
+            'time' => 'time',
+        ];
+
+        return $columnTypes[$type];
     }
 }

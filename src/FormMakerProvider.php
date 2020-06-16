@@ -2,11 +2,16 @@
 
 namespace SierraTecnologia\FormMaker;
 
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use SierraTecnologia\FormMaker\Services\FormMaker;
 use SierraTecnologia\FormMaker\Services\InputMaker;
+use SierraTecnologia\FormMaker\Services\FormAssets;
+use SierraTecnologia\FormMaker\Commands\MakeFieldCommand;
+use SierraTecnologia\FormMaker\Commands\MakeBaseFormCommand;
+use SierraTecnologia\FormMaker\Commands\MakeFormTestCommand;
+use SierraTecnologia\FormMaker\Commands\MakeModelFormCommand;
+use SierraTecnologia\FormMaker\Commands\MakeFormFactoryCommand;
 
 class FormMakerProvider extends ServiceProvider
 {
@@ -18,7 +23,7 @@ class FormMakerProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../config/form-maker.php' => base_path('config/form-maker.php'),
+            __DIR__ . '/../config/form-maker.php' => base_path('config/form-maker.php'),
         ]);
         
 
@@ -81,8 +86,8 @@ class FormMakerProvider extends ServiceProvider
             return new FormMaker();
         });
 
-        $this->app->singleton('InputMaker', function () {
-            return new InputMaker();
+        $this->app['blade.compiler']->directive('formMaker', function () {
+            return "<?php echo app('" . FormAssets::class . "')->render(); ?>";
         });
 
         $loader = AliasLoader::getInstance();
@@ -93,5 +98,30 @@ class FormMakerProvider extends ServiceProvider
         // Thrid party
         $loader->alias('Form', \Collective\Html\FormFacade::class);
         $loader->alias('HTML', \Collective\Html\HtmlFacade::class);
+        /*
+        |--------------------------------------------------------------------------
+        | Commands
+        |--------------------------------------------------------------------------
+        */
+
+        $this->commands([
+            MakeFieldCommand::class,
+            MakeModelFormCommand::class,
+            MakeBaseFormCommand::class,
+            MakeFormFactoryCommand::class,
+            MakeFormTestCommand::class,
+        ]);
+    }
+
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->singleton(FormAssets::class, function ($app) {
+            return new FormAssets($app);
+        });
     }
 }

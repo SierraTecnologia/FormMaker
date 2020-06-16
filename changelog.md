@@ -3,6 +3,285 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.12.1] - 2020-06-03
+
+### Added
+- Div and Heading tags for HTML Snippets
+
+## [v2.12.0] - 2020-05-29
+
+### Added
+- New Html Snippets for field spacing
+
+## [v2.11.1] - 2020-05-15
+
+### Changed
+- Submits are now buttons instead of inputs
+
+## [v2.11.0] - 2020-05-14
+
+### Added
+- New Dropzone field
+- New FileWithPreview field
+
+### Changed
+- Refactored Typeahead for more customization
+
+### Fixed
+- Issue with template name variable
+- Issue with wanting no buttons
+
+## [v2.10.0] - 2020-05-12
+
+### Added
+- New field templates
+- New typeahead field
+
+### Changed
+- Minor updates for doc blocks
+
+## [v2.9.1] - 2020-05-08
+
+### Fixed
+- Issue with naming in Bootstrap HasOne
+
+## [v2.9.0] - 2020-05-06
+
+### Added
+- New datepicker field
+
+## [v2.8.0] - 2020-05-06
+
+### Added
+- Custom styles for fields
+- Slug Field
+- Tags Field
+- Bootstrap Select Fields
+- Bootstrap Toggle Field
+
+### Fixed
+- Issue with IDs having spaces
+
+## [v2.7.1] - 2020-05-02
+
+### Fixed
+- Issue with PHP 7.2 and EOT
+
+## [v2.7.0] - 2020-04-22
+
+### Added
+- Javascript and style asset injecting
+
+### Changed
+- Another hard written bootstrap class
+
+## [v2.6.2] - 2020-04-16
+
+### Fixed
+- Issue with improper case
+
+## [v2.6.1] - 2020-04-13
+
+### Fixed
+- Issue with missing default button class
+- Issue with default classes
+- Issue with false labels
+
+## [v2.6.0] - 2020-04-12
+
+### Added
+- Config options for all remaining classes
+
+### Changed
+- Code formating is now PSR12
+
+### Fixed
+- Issue with custom form classes and horizontal
+
+## [v2.5.1] - 2020-04-10
+
+### Fixed
+- Minor issue with spelling
+
+## [v2.5.0] - 2020-04-09
+
+### Added
+- Method for accessing rendered fields without buttons and form wrappers
+
+### Fixed
+- Issue with no label on checkboxes
+
+## [v2.4.6] - 2020-04-09
+
+### Changed
+- Improved default label naming
+
+## [v2.4.5] - 2020-04-09
+
+### Changed
+- Location of field validaiton
+- Improved model instance access
+
+### Fixed
+- Issue with attribute 'value' as array
+
+## [v2.4.4] - 2020-04-07
+
+### Added
+- Ability to access the model instance in a model form
+
+## [v2.4.3] - 2020-04-07
+
+### Added
+- The ability to set the form class as a property
+
+## [v2.4.2] - 2020-03-04
+
+### Added
+- Support for Laravel 7.x
+
+## [v2.4.1] - 2020-01-31
+
+### Fixed
+- Issue with routes being arrays
+-  or having array parameters
+
+## [v2.4.0] - 2020-01-31
+
+### Added
+- Ability to set values of Fields
+
+### Fixed
+- More bootstrap dependency removal
+
+## [v2.3.1] - 2020-01-25
+
+### Fixed
+- Corrected some missing bootstrap hardcoded classes
+
+## [v2.3.0] - 2020-01-22
+
+### Added
+- New config options allowing for no bootstrap based classes
+
+## [v2.2.1] - 2020-01-21
+
+### Fixed
+- Minor issue with not escaping values
+
+## [v2.2.0] - 2020-01-16
+
+### Added
+- New null value option for selects and relationship fields
+
+## [v2.1.11] - 2019-11-29
+
+### Fixed
+- Minor issue with boolean value
+
+## [v2.1.10] - 2019-10-10
+
+### Fixed
+- Issue with supporting custom tags
+
+## [v2.1.9] - 2019-10-10
+
+### Fixed
+- Issue with missing directory for Fields
+
+## [v2.1.8] - 2019-09-06
+
+### Added
+- Laravel 6.0 compatibility
+
+## [v2.1.7] - 2019-08-27
+
+### Fixed
+- Issue with wrapping Hidden fields with label
+
+## [v2.1.6] - 2019-08-26
+
+### Added
+- New section based column layout
+
+## [v2.1.5] - 2019-08-24
+
+### Added
+- New custom confirm method for JS
+
+## [v2.1.4] - 2019-07-31
+
+### Fixed
+- Label errors tag
+
+## [v2.1.3] - 2019-07-31
+
+### Changed
+- General code improvements
+
+### Fixed
+- Issue with base form maker
+
+## [v2.1.2] - 2019-07-31
+
+### Added
+- New base form maker command
+- New form sections
+
+### Changed
+- Save key is now submit
+
+### Fixed
+- Standard route consistency
+- Array values for checkboxes
+
+## [v2.1.1] - 2019-07-14
+
+### Added
+- New setRoute method
+
+## [v2.1.0] - 2019-07-02
+
+### Added
+- New BaseForm - for non model based forms
+
+## [v2.0.3] - 2019-06-30
+
+### Added
+- Made cancel buttons optional
+- Better descriptions in stubs
+
+## [v2.0.2] - 2019-06-18
+
+### Changed
+- Php versions
+
+## [v2.0.1] - 2019-06-18
+
+### Fixed
+- PHP versions for tests
+
+## [v2.0.0] - 2019-06-18
+
+### Added
+- New Fields classes
+- New Form class
+- New ModelForm class
+
+### Changed
+- FormMaker now creates form from ModelForm classes rather than arrays and config files
+
+### Removed
+- LaravelCollective packages
+- InputMaker
+- Blade Directives
+- some Helpers
+
+## [v1.3.5] - 2019-06-18
+
+### Fixed
+- Issue with 5.8 compatibility
+
 ## [v1.3.4] - 2018-08-28
 
 ### Added
