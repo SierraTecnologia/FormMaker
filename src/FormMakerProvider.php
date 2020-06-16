@@ -12,6 +12,7 @@ use SierraTecnologia\FormMaker\Commands\MakeBaseFormCommand;
 use SierraTecnologia\FormMaker\Commands\MakeFormTestCommand;
 use SierraTecnologia\FormMaker\Commands\MakeModelFormCommand;
 use SierraTecnologia\FormMaker\Commands\MakeFormFactoryCommand;
+use Illuminate\Foundation\AliasLoader;
 
 class FormMakerProvider extends ServiceProvider
 {
@@ -111,17 +112,10 @@ class FormMakerProvider extends ServiceProvider
             MakeFormFactoryCommand::class,
             MakeFormTestCommand::class,
         ]);
-    }
 
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
-    public function register()
-    {
         $this->app->singleton(FormAssets::class, function ($app) {
             return new FormAssets($app);
         });
     }
+    
 }
