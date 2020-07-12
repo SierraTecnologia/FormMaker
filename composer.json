@@ -30,7 +30,9 @@
             "SierraTecnologia\\FormMaker\\": "src/"
         },
         "files": [
-          "src/Helpers/form.php"
+          "utils/form.php",
+          "utils/form_maker.php",
+          "utils/input_maker.php"
         ]
     },
     "autoload-dev": {

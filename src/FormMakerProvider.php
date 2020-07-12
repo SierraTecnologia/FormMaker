@@ -87,6 +87,12 @@ class FormMakerProvider extends ServiceProvider
             return new FormMaker();
         });
 
+        $this->app->singleton(
+            'InputMaker', function () {
+                return new InputMaker();
+            }
+        );
+
         $this->app['blade.compiler']->directive('formMaker', function () {
             return "<?php echo app('" . FormAssets::class . "')->render(); ?>";
         });
