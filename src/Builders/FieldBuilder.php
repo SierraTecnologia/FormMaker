@@ -296,13 +296,8 @@ class FieldBuilder
 
         $fieldWrapper = "<div class=\"{$formClass}\">";
 
-        $label = $options['label'];
+        $label = str_replace('_', ' ', $this->getLabel($name, $options));
 
-        if (!isset($options['label']) || $label === '') {
-            $label = Str::title($name);
-        }
-
-        $label = str_replace('_', ' ', $label);
         if (Str::contains($label, '[')) {
             $label = $this->getNestedFieldLabel($label)[0];
         }
@@ -313,6 +308,7 @@ class FieldBuilder
 
         return $fieldWrapper . $field . $fieldLabel . '</div>';
     }
+
 
     /**
      * Make a checkbox.
@@ -455,5 +451,13 @@ class FieldBuilder
     protected function toHtmlString($html)
     {
         return new HtmlString($html);
+    }
+    
+    protected function getLabel($name, $options)
+    {
+        if (!isset($options['label']) || $label === '') {
+            return Str::title($name);
+        }
+        return $options['label'];
     }
 }

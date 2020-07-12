@@ -257,7 +257,7 @@ class FieldMaker
     {
         $prefix = '';
 
-        if (isset($columnConfig['before']) || isset($columnConfig['after'])) {
+        if (isset($columnConfig['before'])) {
             $class = config('form-maker.form.before_after_input_wrapper', 'input-group');
             $prefix = '<div class="' . $class . '">' . $columnConfig['before'];
         }
@@ -269,7 +269,7 @@ class FieldMaker
     {
         $postfix = '';
 
-        if (isset($columnConfig['before']) || isset($columnConfig['after'])) {
+        if (isset($columnConfig['after'])) {
             $postfix = $columnConfig['after'] . '</div>';
         }
 
