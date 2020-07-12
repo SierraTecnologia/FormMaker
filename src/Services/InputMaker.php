@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Services\FormMaker;
+namespace SierraTecnologia\FormMaker\Services;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;

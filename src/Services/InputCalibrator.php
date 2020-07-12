@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Services\FormMaker;
+namespace SierraTecnologia\FormMaker\Services;
 
 /**
  * Input Calibration.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Services\FormMaker;
+namespace SierraTecnologia\FormMaker\Services;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\View;
 /**
  * FormMaker helper to make table and object form mapping easy.
  */
-class FormMaker
+class FormMakerAdv
 {
     protected $columns = 1;
 
