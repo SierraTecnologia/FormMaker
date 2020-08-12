@@ -15,6 +15,7 @@
     "require": {
         "php": ">=7.2",
         "doctrine/dbal": "^2.5",
+        "laravelcollective/html": "^6.1",
         "sierratecnologia/former": "^5.0.4",
         "illuminate/support": "^6.0|^7.0|^8.0"
     },
