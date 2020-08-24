@@ -8,7 +8,7 @@ use SierraTecnologia\FormMaker\Forms\ModelForm;
 
 class FormTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void: void
     {
         parent::setUp();
 

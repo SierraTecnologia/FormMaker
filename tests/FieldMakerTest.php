@@ -74,7 +74,7 @@ class FieldMakerTest extends TestCase
     protected $app;
     protected $fieldMaker;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -24,7 +24,7 @@ class UserSecurityAjaxForm extends BaseForm
 
 class FormBaseSubmitMethodTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

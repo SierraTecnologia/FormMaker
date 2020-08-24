@@ -22,7 +22,7 @@ class UserSecurityForm extends BaseForm
 
 class FormBaseTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void: void
     {
         parent::setUp();
 

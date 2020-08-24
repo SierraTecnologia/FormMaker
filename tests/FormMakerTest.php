@@ -36,7 +36,7 @@ class FormMakerTest extends TestCase
 
     protected $formMaker;
 
-    public function setUp(): void
+    protected function setUp(): void: void
     {
         parent::setUp();
 

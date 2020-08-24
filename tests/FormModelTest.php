@@ -47,7 +47,7 @@ class UserForm extends ModelForm
 
 class FormModelTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void: void
     {
         parent::setUp();
 

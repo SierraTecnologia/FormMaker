@@ -26,7 +26,7 @@ class FormAssetsTest extends TestCase
 {
     protected $formAssets;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
