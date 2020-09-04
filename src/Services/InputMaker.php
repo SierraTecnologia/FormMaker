@@ -5,7 +5,7 @@ namespace SierraTecnologia\FormMaker\Services;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
-use Support\Generators\FormMaker\HtmlGenerator;
+use SierraTecnologia\FormMaker\Generators\HtmlGenerator;
 
 /**
  * $this->elper to make an HTML input.
