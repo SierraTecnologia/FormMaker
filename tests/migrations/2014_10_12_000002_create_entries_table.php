@@ -28,6 +28,6 @@ class CreateEntriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('entries');
+        Schema::dropIfExists('entries');
     }
 }
