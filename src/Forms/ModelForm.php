@@ -117,13 +117,15 @@ class ModelForm extends HtmlForm
             }
         }
 
-        $this->html = $this->open([
+        $this->html = $this->open(
+            [
             'route' => [
                 $this->routes['create']
             ],
             'files' => $this->hasFiles,
             'class' => $this->formClass
-        ]);
+            ]
+        );
 
         $fields = $this->parseFields($this->fields());
 
@@ -156,14 +158,16 @@ class ModelForm extends HtmlForm
             }
         }
 
-        $this->html = $this->model($this->instance, [
+        $this->html = $this->model(
+            $this->instance, [
             'route' => [
                 $this->routes['update'], $this->instance->id
             ],
             'method' => $this->methods['update'],
             'files' => $this->hasFiles,
             'class' => $this->formClass,
-        ]);
+            ]
+        );
 
         $fields = $this->parseFields($this->fields());
 
@@ -190,28 +194,34 @@ class ModelForm extends HtmlForm
 
         $this->builder->setSections($this->setSections());
 
-        $this->html = $this->model($this->instance, [
+        $this->html = $this->model(
+            $this->instance, [
             'route' => [
                 $this->routes['delete'], $this->instance->id
             ],
             'method' => $this->methods['delete'],
             'class' => $this->formDeleteClass,
-        ]);
+            ]
+        );
 
         $options = [
             'class' => $this->buttonClasses['delete'],
         ];
 
         if (!empty($this->confirmMessage) && is_null($this->confirmMessage)) {
-            $options = array_merge($options, [
+            $options = array_merge(
+                $options, [
                 'onclick' => "return confirm('{$this->confirmMessage}')"
-            ]);
+                ]
+            );
         }
 
         if (!empty($this->confirmMessage) && !is_null($this->confirmMethod)) {
-            $options = array_merge($options, [
+            $options = array_merge(
+                $options, [
                 'onclick' => "{$this->confirmMethod}(event, '{$this->confirmMessage}')"
-            ]);
+                ]
+            );
         }
 
         $options['type'] = 'submit';

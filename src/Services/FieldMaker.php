@@ -111,27 +111,31 @@ class FieldMaker
             $name = str_replace('_', ' ', $name);
             $name = $options['label'] ?? $name;
 
-            return $this->fieldTemplate($columnConfig['template'], compact(
-                'rowClass',
-                'labelClass',
-                'fieldClass',
-                'label',
-                'field',
-                'errors',
-                'id',
-                'name'
-            ));
+            return $this->fieldTemplate(
+                $columnConfig['template'], compact(
+                    'rowClass',
+                    'labelClass',
+                    'fieldClass',
+                    'label',
+                    'field',
+                    'errors',
+                    'id',
+                    'name'
+                )
+            );
         }
 
         if (isset($columnConfig['view'])) {
             $options = $this->parseOptions($column, $columnConfig);
 
-            return view($columnConfig['view'], compact(
-                'label',
-                'field',
-                'errors',
-                'options'
-            ))->render();
+            return view(
+                $columnConfig['view'], compact(
+                    'label',
+                    'field',
+                    'errors',
+                    'options'
+                )
+            )->render();
         }
 
         if (in_array($columnConfig['type'], $this->specialSelect)) {

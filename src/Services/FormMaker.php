@@ -84,7 +84,7 @@ class FormMaker
     /**
      * Generate a form from a table.
      *
-     * @param string $table Table name
+     * @param string $table  Table name
      * @param array  $fields Field configs
      *
      * @return string
@@ -115,7 +115,7 @@ class FormMaker
     /**
      * Generate a form from just the fields.
      *
-     * @param string $table Table name
+     * @param string $table  Table name
      * @param array  $fields Field configs
      *
      * @return string
@@ -201,27 +201,27 @@ class FormMaker
     private function buildUsingColumns($formBuild)
     {
         switch ($this->columns) {
-            case 1:
-                return implode("", $formBuild);
-            case 2:
-                return $this->buildColumnForm($formBuild, 2);
-            case 3:
-                return $this->buildColumnForm($formBuild, 3);
-            case 4:
-                return $this->buildColumnForm($formBuild, 4);
-            case 6:
-                return $this->buildColumnForm($formBuild, 6);
-            case 'sections':
-                return $this->buildColumnForm($formBuild, null);
-            default:
-                return implode("", $formBuild);
+        case 1:
+            return implode("", $formBuild);
+        case 2:
+            return $this->buildColumnForm($formBuild, 2);
+        case 3:
+            return $this->buildColumnForm($formBuild, 3);
+        case 4:
+            return $this->buildColumnForm($formBuild, 4);
+        case 6:
+            return $this->buildColumnForm($formBuild, 6);
+        case 'sections':
+            return $this->buildColumnForm($formBuild, null);
+        default:
+            return implode("", $formBuild);
         }
     }
 
     /**
      * Set the assets of the form for render
      *
-     * @param array $columnConfig
+     * @param  array $columnConfig
      * @return void
      */
     public function setAssets($columnConfig)
@@ -261,9 +261,9 @@ class FormMaker
     /**
      * Build a section of fields
      *
-     * @param array $fields
-     * @param int|null $columns
-     * @param string $label
+     * @param  array    $fields
+     * @param  int|null $columns
+     * @param  string   $label
      * @return string
      */
     private function buildSection($fields, $columns, $label = null)
@@ -306,7 +306,7 @@ class FormMaker
      * Build a two column form using standard bootstrap classes
      *
      * @param  array $formBuild
-     * @param  int $columns
+     * @param  int   $columns
      * @return string
      */
     private function buildColumnForm($formBuild, $columns)

@@ -6,8 +6,10 @@
 |--------------------------------------------------------------------------
 */
 
-$factory->define(DummyClass, function (Faker\Generator $faker) {
-    return [
-DummyFields
-    ];
-});
+$factory->define(
+    DummyClass, function (Faker\Generator $faker) {
+        return [
+        DummyFields
+        ];
+    }
+);

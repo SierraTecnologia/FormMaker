@@ -11,8 +11,8 @@ class FieldBuilder
     /**
      * Create a submit button element.
      *
-     * @param  string $value
-     * @param  array  $options
+     * @param string $value
+     * @param array  $options
      *
      * @return \Illuminate\Support\HtmlString
      */
@@ -25,7 +25,7 @@ class FieldBuilder
      * Make an html button
      *
      * @param string $value
-     * @param array $options
+     * @param array  $options
      *
      * @return \Illuminate\Support\HtmlString
      */
@@ -43,8 +43,8 @@ class FieldBuilder
      *
      * @param string $type
      * @param string $name
-     * @param mixed $value
-     * @param array $options
+     * @param mixed  $value
+     * @param array  $options
      *
      * @return string
      */
@@ -67,8 +67,8 @@ class FieldBuilder
      *
      * @param string $type
      * @param string $name
-     * @param mixed $value
-     * @param array $options
+     * @param mixed  $value
+     * @param array  $options
      *
      * @return string
      */
@@ -135,7 +135,7 @@ class FieldBuilder
      *
      * @param array  $config
      * @param string $population
-     * @param mixed $custom
+     * @param mixed  $custom
      *
      * @return string
      */
@@ -164,9 +164,9 @@ class FieldBuilder
     /**
      * Make a textarea.
      *
-     * @param string  $name
-     * @param mixed $value
-     * @param array $options
+     * @param string $name
+     * @param mixed  $value
+     * @param array  $options
      *
      * @return string
      */
@@ -180,9 +180,9 @@ class FieldBuilder
     /**
      * Make a inline checkbox.
      *
-     * @param string  $name
-     * @param mixed $value
-     * @param array $options
+     * @param string $name
+     * @param mixed  $value
+     * @param array  $options
      *
      * @return string
      */
@@ -197,8 +197,8 @@ class FieldBuilder
      * Make a inline radio.
      *
      * @param string $name
-     * @param mixed $value
-     * @param array $options
+     * @param mixed  $value
+     * @param array  $options
      *
      * @return string
      */
@@ -213,8 +213,8 @@ class FieldBuilder
      * Make a select.
      *
      * @param string $name
-     * @param mixed $selected
-     * @param array $options
+     * @param mixed  $selected
+     * @param array  $options
      *
      * @return string
      */
@@ -244,8 +244,7 @@ class FieldBuilder
         foreach ($options['options'] as $key => $value) {
             $selectedValue = '';
 
-            if (
-                isset($options['attributes']['multiple'])
+            if (isset($options['attributes']['multiple'])
                 && (is_object($selected) || is_array($selected))
             ) {
                 if (in_array($value, collect($selected)->toArray())) {
@@ -269,8 +268,8 @@ class FieldBuilder
      * Make a checkbox.
      *
      * @param string $name
-     * @param mixed $value
-     * @param array $options
+     * @param mixed  $value
+     * @param array  $options
      *
      * @return string
      */
@@ -314,8 +313,8 @@ class FieldBuilder
      * Make a checkbox.
      *
      * @param string $name
-     * @param mixed $value
-     * @param array $options
+     * @param mixed  $value
+     * @param array  $options
      *
      * @return string
      */
@@ -331,8 +330,8 @@ class FieldBuilder
      * Make a radio.
      *
      * @param string $name
-     * @param mixed $value
-     * @param array $options
+     * @param mixed  $value
+     * @param array  $options
      *
      * @return string
      */
@@ -348,8 +347,8 @@ class FieldBuilder
      * Make a relationship input.
      *
      * @param string $name
-     * @param mixed $value
-     * @param array $options
+     * @param mixed  $value
+     * @param array  $options
      *
      * @return string
      */

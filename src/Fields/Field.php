@@ -74,7 +74,7 @@ class Field
      * Make a field config for the FieldMaker
      *
      * @param string $name
-     * @param array $options
+     * @param array  $options
      *
      * @return array
      */
@@ -146,7 +146,7 @@ class Field
     /**
      * Get the wrappers for the input fields
      *
-     * @param array $options
+     * @param array  $options
      * @param string $key
      *
      * @return mixed
@@ -193,7 +193,7 @@ class Field
     /**
      * Field related stylesheets
      *
-     * @param array $options
+     * @param  array $options
      * @return array
      */
     protected static function stylesheets($options)
@@ -204,8 +204,8 @@ class Field
     /**
      * Field related styles
      *
-     * @param string $id
-     * @param array $options
+     * @param  string $id
+     * @param  array  $options
      * @return string|null
      */
     protected static function styles($id, $options)
@@ -216,7 +216,7 @@ class Field
     /**
      * Field related scripts
      *
-     * @param array $options
+     * @param  array $options
      * @return array
      */
     protected static function scripts($options)
@@ -227,8 +227,8 @@ class Field
     /**
      * Field related JavaScript
      *
-     * @param string $id
-     * @param array $options
+     * @param  string $id
+     * @param  array  $options
      * @return string|null
      */
     protected static function js($id, $options)

@@ -49,8 +49,8 @@ class BaseCommand extends GeneratorCommand
      * Replace other variables.
      *
      * @param string $stub
-     * @param array $keys
-     * @param array $values
+     * @param array  $keys
+     * @param array  $values
      *
      * @return $this
      */

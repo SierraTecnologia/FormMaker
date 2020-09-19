@@ -36,7 +36,7 @@ class FormAssets
     /**
      * Add field stylesheets to a form
      *
-     * @param array $stylesheets
+     * @param  array $stylesheets
      * @return self
      */
     public function addStylesheets($stylesheets)
@@ -51,7 +51,7 @@ class FormAssets
     /**
      * Add field scripts to a form
      *
-     * @param array $scripts
+     * @param  array $scripts
      * @return self
      */
     public function addScripts($scripts)
@@ -66,7 +66,7 @@ class FormAssets
     /**
      * Add field Styles code to a form
      *
-     * @param string $styles
+     * @param  string $styles
      * @return self
      */
     public function addStyles($styles)
@@ -81,7 +81,7 @@ class FormAssets
     /**
      * Add field JS code to a form
      *
-     * @param string $js
+     * @param  string $js
      * @return self
      */
     public function addJs($js)

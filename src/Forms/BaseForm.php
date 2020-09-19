@@ -50,7 +50,7 @@ class BaseForm extends HtmlForm
      * Set the route
      *
      * @param string $name
-     * @param array $parameters
+     * @param array  $parameters
      *
      * @return \SierraTecnologia\FormMaker\Forms\BaseForm
      */
@@ -83,12 +83,14 @@ class BaseForm extends HtmlForm
 
         $this->builder->setSections($this->setSections());
 
-        $this->html = $this->open([
+        $this->html = $this->open(
+            [
             'route' => $this->route,
             'method' => $this->method,
             'files' => $this->hasFiles,
             'class' => $this->formClass,
-        ]);
+            ]
+        );
 
         $fields = $this->parseFields($this->fields());
 

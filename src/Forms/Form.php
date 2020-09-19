@@ -88,33 +88,41 @@ class Form
     /**
      * Generate a button form based on method and route
      *
-     * @param string $method
-     * @param string $route
-     * @param string $button
+     * @param  string $method
+     * @param  string $route
+     * @param  string $button
      * @return void
      */
     public function action($method, $route, $button = 'Send', $options = [])
     {
-        $this->html = $this->open([
+        $this->html = $this->open(
+            [
             'route' => $route,
             'method' => $method,
             'class' => config('form-maker.form.inline-class', 'form d-inline')
-        ]);
+            ]
+        );
 
-        $options = array_merge([
+        $options = array_merge(
+            [
             'class' => config('form-maker.buttons.submit', 'btn btn-primary')
-        ], $options);
+            ], $options
+        );
 
         if (!empty($this->confirmMessage) && is_null($this->confirmMethod)) {
-            $options = array_merge($options, [
+            $options = array_merge(
+                $options, [
                 'onclick' => "return confirm('{$this->confirmMessage}')"
-            ]);
+                ]
+            );
         }
 
         if (!empty($this->confirmMessage) && !is_null($this->confirmMethod)) {
-            $options = array_merge($options, [
+            $options = array_merge(
+                $options, [
                 'onclick' => "{$this->confirmMethod}(event, '{$this->confirmMessage}')"
-            ]);
+                ]
+            );
         }
 
         $options['type'] = 'submit';
@@ -147,7 +155,7 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  array $options
+     * @param array $options
      *
      * @return \Illuminate\Support\HtmlString
      */
@@ -201,7 +209,7 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  string $method
+     * @param string $method
      *
      * @return string
      */
@@ -225,7 +233,7 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  array|string $options
+     * @param array|string $options
      *
      * @return string
      */
@@ -243,7 +251,7 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  array|string $options
+     * @param array|string $options
      *
      * @return string
      */
@@ -261,7 +269,7 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  array $options
+     * @param array $options
      *
      * @return string
      */
@@ -285,8 +293,8 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  mixed $model
-     * @param  array $options
+     * @param mixed $model
+     * @param array $options
      *
      * @return \Illuminate\Support\HtmlString
      */
@@ -302,7 +310,7 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  mixed $model
+     * @param mixed $model
      *
      * @return void
      */
@@ -328,7 +336,7 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  string $method
+     * @param string $method
      *
      * @return string
      */
