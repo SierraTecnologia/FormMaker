@@ -410,7 +410,7 @@ class FieldBuilder
      *
      * @return boolean
      */
-    public function isChecked($name, $value, $options)
+    public function isChecked(string $name, $value, $options)
     {
         if (isset($options['attributes']['value'])) {
             if ($value === $options['attributes']['value']) {
@@ -433,7 +433,7 @@ class FieldBuilder
         return '';
     }
 
-    private function getNestedFieldLabel($label)
+    private function getNestedFieldLabel(string $label)
     {
         preg_match_all("/\[([^\]]*)\]/", $label, $matches);
 
@@ -452,7 +452,10 @@ class FieldBuilder
         return new HtmlString($html);
     }
     
-    protected function getLabel($name, $options)
+    /**
+     * @param array $options
+     */
+    protected function getLabel(string $name, array $options)
     {
         if (!isset($options['label']) || $label === '') {
             return Str::title($name);

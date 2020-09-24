@@ -399,7 +399,7 @@ class FormMakerAdv
      * @param  array $formBuild
      * @return string
      */
-    private function buildBootstrapColumnForm($formBuild, $columns)
+    private function buildBootstrapColumnForm($formBuild, int $columns)
     {
         $newFormBuild = [];
         $formChunks = array_chunk($formBuild, $columns);
@@ -460,7 +460,7 @@ class FormMakerAdv
      *
      * @return array
      */
-    public function getTableColumns($table, $allColumns = false)
+    public function getTableColumns($table, bool $allColumns = false)
     {
         $tableColumns = Schema::connection($this->connection)->getColumnListing($table);
 

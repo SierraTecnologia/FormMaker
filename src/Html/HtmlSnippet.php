@@ -7,7 +7,10 @@ use Illuminate\Support\Str;
 
 class HtmlSnippet
 {
-    public static function content($options = [])
+    /**
+     * @param array|null $options
+     */
+    public static function content(?array $options = [])
     {
         return null;
     }

@@ -356,7 +356,7 @@ class Form
      *
      * @return \Illuminate\Support\HtmlString
      */
-    protected function toHtmlString($html)
+    protected function toHtmlString(string $html)
     {
         return new HtmlString($html);
     }

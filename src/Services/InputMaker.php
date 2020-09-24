@@ -217,7 +217,7 @@ class InputMaker
      *
      * @return string
      */
-    public function prepareTheClass($class, $config)
+    public function prepareTheClass($class, array $config)
     {
         $finalizedClass = $class;
 
@@ -251,10 +251,11 @@ class InputMaker
      * @param bool   $reformatted
      * @param string $name
      * @param array  $config
+     * @param (array|bool|mixed|null|object|string)[] $inputConfig
      *
      * @return array
      */
-    private function refineConfigs($inputConfig, $reformatted, $name, $config)
+    private function refineConfigs(array $inputConfig, bool $reformatted, string $name, array $config)
     {
         // If validation inputs are available lets prepopulate the fields!
         if (!empty($inputConfig['inputs']) && isset($inputConfig['inputs'][$name])) {

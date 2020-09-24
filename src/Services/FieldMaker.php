@@ -179,7 +179,7 @@ class FieldMaker
         return $this->wrapField($fieldGroup, $label, $fieldString, $errors);
     }
 
-    public function label($column, $columnConfig, $class = null, $errors)
+    public function label(string $column, array $columnConfig, $class = null, $errors)
     {
         $label = Str::title($column);
         $label = str_replace('_', ' ', $label);
@@ -205,7 +205,7 @@ class FieldMaker
         return "<label class=\"{$class}\" for=\"{$id}\">{$label}</label>";
     }
 
-    public function wrapField($fieldGroup, $label, $fieldString, $errors)
+    public function wrapField($fieldGroup, $label, string $fieldString, $errors)
     {
         if (Str::contains($fieldString, 'hidden')) {
             return $fieldString;
@@ -214,7 +214,7 @@ class FieldMaker
         return "<div class=\"{$fieldGroup}\">{$label}{$fieldString}</div>{$errors}";
     }
 
-    public function getObjectValue($object, $name)
+    public function getObjectValue($object, string $name)
     {
         if (is_object($object) && isset($object->$name)) {
             return $object->$name;
@@ -239,7 +239,7 @@ class FieldMaker
         return '';
     }
 
-    public function getFieldErrors($column)
+    public function getFieldErrors(string $column)
     {
         $textError = config('form-maker.form.text-error', 'text-danger');
 
@@ -257,7 +257,7 @@ class FieldMaker
         return '';
     }
 
-    public function before($columnConfig)
+    public function before(array $columnConfig)
     {
         $prefix = '';
 
@@ -269,7 +269,7 @@ class FieldMaker
         return $prefix;
     }
 
-    public function after($columnConfig)
+    public function after(array $columnConfig)
     {
         $postfix = '';
 
@@ -280,7 +280,10 @@ class FieldMaker
         return $postfix;
     }
 
-    private function fieldTemplate($template, $options)
+    /**
+     * @param array $options
+     */
+    private function fieldTemplate($template, array $options)
     {
         $keys = [];
         $values = [];
@@ -294,7 +297,7 @@ class FieldMaker
         return str_replace($keys, $values, $template);
     }
 
-    private function getOldValue($column)
+    private function getOldValue(string $column)
     {
         if (session()->isStarted()) {
             return request()->old($column);
@@ -303,7 +306,7 @@ class FieldMaker
         return null;
     }
 
-    private function parseOptions($name, $options)
+    private function parseOptions(string $name, array $options)
     {
         $default = [
             'class' => config('form-maker.form.input-class', 'form-control'),
@@ -320,7 +323,7 @@ class FieldMaker
         return str_replace('[]', '', ucfirst($column));
     }
 
-    private function getNestedFieldLabel($label)
+    private function getNestedFieldLabel(string $label)
     {
         preg_match_all("/\[([^\]]*)\]/", $label, $matches);
 

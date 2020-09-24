@@ -339,7 +339,7 @@ class FormMaker
      *
      * @return array
      */
-    public function getTableColumns($table, $allColumns = false)
+    public function getTableColumns($table, bool $allColumns = false)
     {
         $tableColumns = Schema::connection($this->connection)->getColumnListing($table);
 
