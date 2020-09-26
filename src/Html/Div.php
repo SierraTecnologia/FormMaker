@@ -6,6 +6,9 @@ use SierraTecnologia\FormMaker\Html\HtmlSnippet;
 
 class Div extends HtmlSnippet
 {
+    /**
+     * @return string
+     */
     public static function content($options = [])
     {
         $class = '';

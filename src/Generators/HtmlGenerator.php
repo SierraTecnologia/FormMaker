@@ -16,34 +16,6 @@ class HtmlGenerator
     */
 
     /**
-     * Make a hidden input.
-     *
-     * @param array  $config
-     * @param string $population
-     * @param mixed  $custom
-     *
-     * @return string
-     */
-    public function makeHidden($config, $population, $custom)
-    {
-        return '<input '.$this->processCustom($custom).' id="'.$this->getId($config).'" name="'.$config['name'].'" type="hidden" value="'.$population.'">';
-    }
-
-    /**
-     * Make text input.
-     *
-     * @param array  $config
-     * @param string $population
-     * @param mixed  $custom
-     *
-     * @return string
-     */
-    public function makeText($config, $population, $custom)
-    {
-        return '<textarea '.$this->processCustom($custom).' id="'.$this->getId($config).'" class="'.$config['class'].'" name="'.$config['name'].'" placeholder="'.$config['placeholder'].'">'.$population.'</textarea>';
-    }
-
-    /**
      * Make a select input.
      *
      * @param array  $config
@@ -52,7 +24,7 @@ class HtmlGenerator
      *
      * @return string
      */
-    public function makeSelected($config, $selected, $custom)
+    public function makeSelected($config, $selected, $custom): string
     {
         $options = $prefix = $suffix = '';
 
@@ -89,42 +61,6 @@ class HtmlGenerator
         }
 
         return $prefix.'<select '.$this->processCustom($custom).' id="'.$this->getId($config).'" class="'.$config['class'].'" name="'.$config['name'].'">'.$options.'</select>'.$suffix;
-    }
-
-    /**
-     * Make a checkbox.
-     *
-     * @param array  $config
-     * @param string $selected
-     * @param mixed  $custom
-     *
-     * @return string
-     */
-    public function makeCheckbox($config, $selected, $custom)
-    {
-        if (str_contains($config['class'], 'form-control')) {
-            if (str_contains($config['class'], 'form-check-inline')) {
-                $config['class'] = str_replace('form-control', '', $config['class']);
-            } else {
-                $config['class'] = str_replace('form-control', 'form-check-input', $config['class']);
-            }
-        }
-
-        return '<input '.$this->processCustom($custom).' id="'.$this->getId($config).'" '.$selected.' type="checkbox" name="'.$config['name'].'" class="'. $config['class'] .'">';
-    }
-
-    /**
-     * Make a radio input.
-     *
-     * @param array  $config
-     * @param string $selected
-     * @param mixed  $custom
-     *
-     * @return string
-     */
-    public function makeRadio($config, $selected, $custom)
-    {
-        return '<input '.$this->processCustom($custom).' id="'.$this->getId($config).'" '.$selected.' type="radio" name="'.$config['name'].'" class="'. $config['class'] .'">';
     }
 
     /*
@@ -215,7 +151,7 @@ class HtmlGenerator
      *
      * @return string
      */
-    public function makeHTMLInputString($config)
+    public function makeHTMLInputString($config): string
     {
         $custom = $this->getCustom($config);
         $multiple = $this->isMultiple($config, 'multiple');
@@ -238,9 +174,9 @@ class HtmlGenerator
      * @param array  $config
      * @param string $response
      *
-     * @return bool
+     * @return string
      */
-    public function isMultiple($config, $response)
+    public function isMultiple($config, $response): string
     {
         if (isset($config['config']['multiple'])) {
             return $response;
@@ -310,7 +246,7 @@ class HtmlGenerator
      *
      * @return string
      */
-    public function getFloatingNumber($config)
+    public function getFloatingNumber($config): string
     {
         if ($config['inputType'] === 'float' || $config['inputType'] === 'decimal') {
             return 'step="any"';

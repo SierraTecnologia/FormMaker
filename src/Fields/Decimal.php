@@ -6,11 +6,19 @@ use SierraTecnologia\FormMaker\Fields\Field;
 
 class Decimal extends Field
 {
+    /**
+     * @return string
+     */
     protected static function getType()
     {
         return 'number';
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{step: string}
+     */
     protected static function getAttributes()
     {
         return [
@@ -18,6 +26,9 @@ class Decimal extends Field
         ];
     }
 
+    /**
+     * @return string
+     */
     protected static function getFactory()
     {
         return 'randomFloat';

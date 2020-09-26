@@ -52,9 +52,9 @@ class BaseForm extends HtmlForm
      * @param string $name
      * @param array  $parameters
      *
-     * @return \SierraTecnologia\FormMaker\Forms\BaseForm
+     * @return self
      */
-    public function setRoute($name, $parameters = [])
+    public function setRoute($name, $parameters = []): self
     {
         if (is_array($parameters)) {
             $this->route = array_merge([ $name ], $parameters);
@@ -71,9 +71,9 @@ class BaseForm extends HtmlForm
     /**
      * Create a form
      *
-     * @return \SierraTecnologia\FormMaker\Forms\BaseForm
+     * @return self
      */
-    public function make()
+    public function make(): self
     {
         if ($this->orientation == 'horizontal') {
             if ($this->formClass === config('form-maker.form.horizontal-class')) {

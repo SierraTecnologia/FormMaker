@@ -19,7 +19,9 @@ class Typeahead extends Field
     /**
      * Input attributes
      *
-     * @return array
+     * @return string[]
+     *
+     * @psalm-return array{class: string}
      */
     protected static function getAttributes()
     {
@@ -32,12 +34,19 @@ class Typeahead extends Field
      * Field maker options
      *
      * @return array
+     *
+     * @psalm-return array<empty, empty>
      */
     protected static function getOptions()
     {
         return [];
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
     protected static function stylesheets($options)
     {
         return [
@@ -45,6 +54,11 @@ class Typeahead extends Field
         ];
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
     protected static function scripts($options)
     {
         return [
@@ -52,6 +66,9 @@ class Typeahead extends Field
         ];
     }
 
+    /**
+     * @return string
+     */
     protected static function getTemplate()
     {
         return <<<EOT
@@ -69,6 +86,9 @@ class Typeahead extends Field
 EOT;
     }
 
+    /**
+     * @return string
+     */
     protected static function js($id, $options)
     {
         $values = $options['matches'];

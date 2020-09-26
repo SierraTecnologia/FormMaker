@@ -6,6 +6,9 @@ use SierraTecnologia\FormMaker\Fields\Field;
 
 class Number extends Field
 {
+    /**
+     * @return string
+     */
     protected static function getType()
     {
         return 'number';

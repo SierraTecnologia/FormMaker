@@ -15,7 +15,12 @@ class HtmlSnippet
         return null;
     }
 
-    public static function make($content = null)
+    /**
+     * @return (mixed|string)[][]
+     *
+     * @psalm-return array<string, array{type: string, content: mixed}>
+     */
+    public static function make($content = null): array
     {
         if (is_array($content) || is_null($content)) {
             $content = static::content($content);

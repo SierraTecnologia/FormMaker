@@ -13,15 +13,23 @@ use Illuminate\Support\Facades\View;
  */
 class FormMakerAdv
 {
+    /**
+     * @var int
+     */
     protected $columns = 1;
 
-    protected $inputMaker;
+    protected InputMaker $inputMaker;
 
-    protected $inputCalibrator;
+    protected InputCalibrator $inputCalibrator;
 
     public $connection;
 
-    protected $columnTypes = [
+    /**
+     * @var string[]
+     *
+     * @psalm-var array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string, 7: string, 8: string, 9: string, 10: string, 11: string, 12: string, 13: string, 14: string, 15: string, 16: string}
+     */
+    protected array $columnTypes = [
         'integer',
         'string',
         'datetime',
@@ -52,8 +60,10 @@ class FormMakerAdv
      * Set the form maker connection.
      *
      * @param string $connection
+     *
+     * @return self
      */
-    public function setConnection($connection)
+    public function setConnection($connection): self
     {
         $this->connection = $connection;
 
@@ -64,8 +74,10 @@ class FormMakerAdv
      * Set the columns of the form
      *
      * @param int $columns
+     *
+     * @return self
      */
-    public function setColumns($columns)
+    public function setColumns($columns): self
     {
         $this->columns = $columns;
 
@@ -274,7 +286,7 @@ class FormMakerAdv
      * @param string       $column Column name
      * @param string       $input  Input string
      *
-     * @return string
+     * @return \Illuminate\Contracts\View\View|string
      */
     private function formBuilder($view, $errors, $field, $column, $input)
     {
@@ -458,9 +470,11 @@ class FormMakerAdv
      *
      * @param string $table Table name
      *
-     * @return array
+     * @return array[]
+     *
+     * @psalm-return array<array-key, array{type: mixed}>
      */
-    public function getTableColumns($table, bool $allColumns = false)
+    public function getTableColumns($table, bool $allColumns = false): array
     {
         $tableColumns = Schema::connection($this->connection)->getColumnListing($table);
 

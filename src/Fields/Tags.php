@@ -6,21 +6,37 @@ use SierraTecnologia\FormMaker\Fields\Field;
 
 class Tags extends Field
 {
+    /**
+     * @return string
+     */
     protected static function getType()
     {
         return 'text';
     }
 
+    /**
+     * @return array
+     *
+     * @psalm-return array<empty, empty>
+     */
     protected static function getAttributes()
     {
         return [];
     }
 
+    /**
+     * @return string
+     */
     protected static function getFactory()
     {
         return 'text(50)';
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
     protected static function stylesheets($options)
     {
         return [
@@ -28,6 +44,11 @@ class Tags extends Field
         ];
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
     protected static function scripts($options)
     {
         return [
@@ -35,6 +56,9 @@ class Tags extends Field
         ];
     }
 
+    /**
+     * @return string
+     */
     protected static function styles($id, $options)
     {
         $defaultBorder = $options['default-border'] ?? '#EEE';
@@ -48,6 +72,9 @@ class Tags extends Field
 EOT;
     }
 
+    /**
+     * @return string
+     */
     protected static function js($id, $options)
     {
         return <<<EOT

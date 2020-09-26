@@ -12,8 +12,14 @@ use SierraTecnologia\FormMaker\Services\FormAssets;
  */
 class FormMaker
 {
+    /**
+     * @var int
+     */
     protected $columns = 1;
 
+    /**
+     * @var array
+     */
     protected $sections = [];
 
     protected $orientation;
@@ -34,23 +40,13 @@ class FormMaker
     }
 
     /**
-     * Set the form maker connection.
-     *
-     * @param string $connection
-     */
-    public function setConnection($connection)
-    {
-        $this->connection = $connection;
-
-        return $this;
-    }
-
-    /**
      * Set the columns of the form
      *
      * @param int $columns
+     *
+     * @return self
      */
-    public function setColumns($columns)
+    public function setColumns($columns): self
     {
         $this->columns = $columns;
 
@@ -58,23 +54,13 @@ class FormMaker
     }
 
     /**
-     * Set the sections of the form
-     *
-     * @param array $sections
-     */
-    public function setSections($sections)
-    {
-        $this->sections = $sections;
-
-        return $this;
-    }
-
-    /**
      * Set the columns of the form
      *
      * @param int $columns
+     *
+     * @return self
      */
-    public function setOrientation($orientation)
+    public function setOrientation($orientation): self
     {
         $this->fieldMaker->orientation = $orientation;
 
@@ -239,9 +225,11 @@ class FormMaker
      *
      * @param string $table
      *
-     * @return array
+     * @return array[]
+     *
+     * @psalm-return array<array-key, array{type: mixed}>
      */
-    public function getTableAsFields($table)
+    public function getTableAsFields($table): array
     {
         $fields = [];
 
@@ -337,9 +325,11 @@ class FormMaker
      *
      * @param string $table Table name
      *
-     * @return array
+     * @return array[]
+     *
+     * @psalm-return array<array-key, array{type: mixed}>
      */
-    public function getTableColumns($table, bool $allColumns = false)
+    public function getTableColumns($table, bool $allColumns = false): array
     {
         $tableColumns = Schema::connection($this->connection)->getColumnListing($table);
 
@@ -362,7 +352,7 @@ class FormMaker
         return $tableTypeColumns;
     }
 
-    public function getNormalizedType($type)
+    public function getNormalizedType($type): string
     {
         $columnTypes = [
             'number' => 'number',

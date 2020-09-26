@@ -6,11 +6,19 @@ use SierraTecnologia\FormMaker\Fields\Field;
 
 class Toggle extends Field
 {
+    /**
+     * @return string
+     */
     protected static function getType()
     {
         return 'checkbox';
     }
 
+    /**
+     * @return false[]
+     *
+     * @psalm-return array{label: false}
+     */
     protected static function getOptions()
     {
         return [
@@ -18,16 +26,29 @@ class Toggle extends Field
         ];
     }
 
+    /**
+     * @return array
+     *
+     * @psalm-return array<empty, empty>
+     */
     protected static function getAttributes()
     {
         return [];
     }
 
+    /**
+     * @return string
+     */
     protected static function getFactory()
     {
         return 'boolean';
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
     protected static function stylesheets($options)
     {
         return [
@@ -35,6 +56,11 @@ class Toggle extends Field
         ];
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
     protected static function scripts($options)
     {
         return [
@@ -42,6 +68,9 @@ class Toggle extends Field
         ];
     }
 
+    /**
+     * @return string
+     */
     protected static function js($id, $options)
     {
         $theme = $options['theme'] ?? 'light';

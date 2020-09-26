@@ -6,11 +6,19 @@ use SierraTecnologia\FormMaker\Fields\Field;
 
 class Select extends Field
 {
+    /**
+     * @return string
+     */
     protected static function getType()
     {
         return 'select';
     }
 
+    /**
+     * @return (string|true)[]
+     *
+     * @psalm-return array{class: string, multiple: true}
+     */
     protected static function getAttributes()
     {
         return [
@@ -19,11 +27,19 @@ class Select extends Field
         ];
     }
 
+    /**
+     * @return string
+     */
     protected static function getFactory()
     {
         return 'text(50)';
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
     protected static function stylesheets($options)
     {
         return [
@@ -31,6 +47,11 @@ class Select extends Field
         ];
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
     protected static function scripts($options)
     {
         return [
@@ -38,6 +59,9 @@ class Select extends Field
         ];
     }
 
+    /**
+     * @return string
+     */
     protected static function js($id, $options)
     {
         $btn = $options['btn'] ?? 'btn-primary';

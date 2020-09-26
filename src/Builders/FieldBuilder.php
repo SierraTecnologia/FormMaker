@@ -14,9 +14,9 @@ class FieldBuilder
      * @param string $value
      * @param array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return string
      */
-    public function submit($value = null, $options = [])
+    public function submit($value = null, $options = []): string
     {
         return $this->makeInput('submit', null, $value, $options);
     }
@@ -27,9 +27,9 @@ class FieldBuilder
      * @param string $value
      * @param array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return string
      */
-    public function button($value = null, $options = [])
+    public function button($value = null, $options = []): string
     {
         if (! array_key_exists('type', $options)) {
             $options['type'] = 'button';
@@ -48,7 +48,7 @@ class FieldBuilder
      *
      * @return string
      */
-    public function makeInput($type, $name, $value, $options = [])
+    public function makeInput($type, $name, $value, $options = []): string
     {
         if ($value instanceof DateTime) {
             $value = $value->format($options['format'] ?? 'Y-m-d');
@@ -72,7 +72,7 @@ class FieldBuilder
      *
      * @return string
      */
-    public function makeField($type, $name, $value, $options = [])
+    public function makeField($type, $name, $value, $options = []): string
     {
         if ($value instanceof DateTime) {
             $value = $value->format($options['format'] ?? 'Y-m-d');
@@ -109,9 +109,9 @@ class FieldBuilder
      * @param string $key
      * @param string $value
      *
-     * @return string
+     * @return null|string
      */
-    public function attributeElement($key, $value)
+    public function attributeElement($key, $value): ?string
     {
         if (is_numeric($key)) {
             return $value;
@@ -139,7 +139,7 @@ class FieldBuilder
      *
      * @return string
      */
-    public function makeCustomFile($name, $value, $options)
+    public function makeCustomFile($name, $value, $options): string
     {
         if (isset($options['multiple'])) {
             $name = $name . '[]';
@@ -170,7 +170,7 @@ class FieldBuilder
      *
      * @return string
      */
-    public function makeTextarea($name, $value, $options)
+    public function makeTextarea($name, $value, $options): string
     {
         $attributes = $this->attributes($options['attributes']);
 
@@ -218,7 +218,7 @@ class FieldBuilder
      *
      * @return string
      */
-    public function makeSelect($name, $selected, $options)
+    public function makeSelect($name, $selected, $options): string
     {
         $selectOptions = '';
         unset($options['attributes']['value']);
@@ -273,7 +273,7 @@ class FieldBuilder
      *
      * @return string
      */
-    public function makeCheckInput($name, $value, $options)
+    public function makeCheckInput($name, $value, $options): string
     {
         $options['attributes']['class'] = config('form-maker.form.check-input-class', 'form-check-input');
 
@@ -282,7 +282,7 @@ class FieldBuilder
         }
 
         if (in_array($options['type'], ['radio', 'radio-inline'])) {
-            $field = $this->makeRadio($name, $value, $options);
+            $this->makeRadio($name, $value, $options);
         }
 
         $field = $this->makeCheckbox($name, $value, $options);
@@ -318,7 +318,7 @@ class FieldBuilder
      *
      * @return string
      */
-    public function makeCheckbox($name, $value, $options)
+    public function makeCheckbox($name, $value, $options): string
     {
         $checked = $this->isChecked($name, $value, $options);
         $attributes = $this->attributes($options['attributes']);
@@ -335,7 +335,7 @@ class FieldBuilder
      *
      * @return string
      */
-    public function makeRadio($name, $value, $options)
+    public function makeRadio($name, $value, $options): string
     {
         $checked = $this->isChecked($name, $value, $options);
         $attributes = $this->attributes($options['attributes']);
@@ -365,8 +365,9 @@ class FieldBuilder
             $method = $options['model_options']['method'];
         }
 
+        $items = null;
         if (!isset($options['model_options']['params'])) {
-            $items = $class->$method();
+            $class->$method();
         }
 
         if (isset($options['model_options']['params'])) {
@@ -408,9 +409,9 @@ class FieldBuilder
      * @param mixed $value
      * @param array $options
      *
-     * @return boolean
+     * @return string
      */
-    public function isChecked(string $name, $value, $options)
+    public function isChecked(string $name, $value, $options): string
     {
         if (isset($options['attributes']['value'])) {
             if ($value === $options['attributes']['value']) {
@@ -433,7 +434,12 @@ class FieldBuilder
         return '';
     }
 
-    private function getNestedFieldLabel(string $label)
+    /**
+     * @return string[]
+     *
+     * @psalm-return list<string>
+     */
+    private function getNestedFieldLabel(string $label): array
     {
         preg_match_all("/\[([^\]]*)\]/", $label, $matches);
 

@@ -13,33 +13,12 @@ class FormAssets
     public $js = [];
 
     /**
-     * Render the form assets
-     *
-     * @return string
-     */
-    public function render()
-    {
-        $output = '';
-
-        $output .= collect($this->stylesheets)->unique()->implode("\n");
-        $output .= collect($this->scripts)->unique()->implode("\n");
-
-        $styles = collect($this->styles)->unique()->implode("\n");
-        $output .= "<style>\n{$styles}\n</style>\n";
-
-        $js = collect($this->js)->unique()->implode("\n");
-        $output .= "<script>\n{$js}\n</script>\n";
-
-        return $output;
-    }
-
-    /**
      * Add field stylesheets to a form
      *
      * @param  array $stylesheets
      * @return self
      */
-    public function addStylesheets($stylesheets)
+    public function addStylesheets($stylesheets): self
     {
         foreach ($stylesheets as $sheet) {
             $this->stylesheets[] = '<link href="' . $sheet . '" rel="stylesheet">';
@@ -54,7 +33,7 @@ class FormAssets
      * @param  array $scripts
      * @return self
      */
-    public function addScripts($scripts)
+    public function addScripts($scripts): self
     {
         foreach ($scripts as $script) {
             $this->scripts[] = '<script src="'.$script.'"></script>';
@@ -69,7 +48,7 @@ class FormAssets
      * @param  string $styles
      * @return self
      */
-    public function addStyles($styles)
+    public function addStyles($styles): self
     {
         if (!is_null($styles)) {
             $this->styles[] = $styles;
@@ -84,7 +63,7 @@ class FormAssets
      * @param  string $js
      * @return self
      */
-    public function addJs($js)
+    public function addJs($js): self
     {
         if (!is_null($js)) {
             $this->js[] = $js;

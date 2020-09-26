@@ -44,6 +44,8 @@ class Field
      * Get options
      *
      * @return array
+     *
+     * @psalm-return array<empty, empty>
      */
     protected static function getOptions()
     {
@@ -54,8 +56,10 @@ class Field
      * Get select options for <select>
      *
      * @return array
+     *
+     * @psalm-return array<empty, empty>
      */
-    protected static function getSelectOptions()
+    protected static function getSelectOptions(): array
     {
         return [];
     }
@@ -64,6 +68,8 @@ class Field
      * Get attributes
      *
      * @return array
+     *
+     * @psalm-return array<empty, empty>
      */
     protected static function getAttributes()
     {
@@ -76,9 +82,11 @@ class Field
      * @param string $name
      * @param array  $options
      *
-     * @return array
+     * @return (array|false|mixed|null|string)[][]
+     *
+     * @psalm-return array<string, array{type: string, options: array, format: mixed|null, legend: mixed|null, label: mixed|null, model: mixed|null, value: mixed|null, null_value: false|mixed, null_label: mixed|string, model_options: array{label: mixed|string, value: mixed|string, params: mixed|null, method: mixed|string}, before: mixed, after: mixed, view: mixed|null, template: null|string, attributes: array, factory: string, assets: array{js: null|string, styles: null|string, scripts: array|null, stylesheets: array|null}}>
      */
-    public static function make($name, $options = [])
+    public static function make($name, $options = []): array
     {
         $options = static::parseOptions($options);
 
@@ -183,7 +191,7 @@ class Field
      * Field template string, performs a basic string swap
      * of name, id, field, label, errors etc
      *
-     * @return string
+     * @return null
      */
     protected static function getTemplate()
     {
@@ -193,8 +201,11 @@ class Field
     /**
      * Field related stylesheets
      *
-     * @param  array $options
+     * @param array $options
+     *
      * @return array
+     *
+     * @psalm-return array<empty, empty>
      */
     protected static function stylesheets($options)
     {
@@ -204,9 +215,10 @@ class Field
     /**
      * Field related styles
      *
-     * @param  string $id
-     * @param  array  $options
-     * @return string|null
+     * @param string $id
+     * @param array  $options
+     *
+     * @return null
      */
     protected static function styles($id, $options)
     {
@@ -216,8 +228,11 @@ class Field
     /**
      * Field related scripts
      *
-     * @param  array $options
+     * @param array $options
+     *
      * @return array
+     *
+     * @psalm-return array<empty, empty>
      */
     protected static function scripts($options)
     {
@@ -227,9 +242,10 @@ class Field
     /**
      * Field related JavaScript
      *
-     * @param  string $id
-     * @param  array  $options
-     * @return string|null
+     * @param string $id
+     * @param array  $options
+     *
+     * @return null
      */
     protected static function js($id, $options)
     {

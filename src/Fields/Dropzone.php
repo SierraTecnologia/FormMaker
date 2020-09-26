@@ -6,21 +6,37 @@ use SierraTecnologia\FormMaker\Fields\Field;
 
 class Dropzone extends Field
 {
+    /**
+     * @return string
+     */
     protected static function getType()
     {
         return 'file';
     }
 
+    /**
+     * @return array
+     *
+     * @psalm-return array<empty, empty>
+     */
     protected static function getAttributes()
     {
         return [];
     }
 
+    /**
+     * @return string
+     */
     protected static function getFactory()
     {
         return 'image';
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
     protected static function stylesheets($options)
     {
         return [
@@ -28,6 +44,11 @@ class Dropzone extends Field
         ];
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
     protected static function scripts($options)
     {
         return [
@@ -35,6 +56,9 @@ class Dropzone extends Field
         ];
     }
 
+    /**
+     * @return string
+     */
     protected static function getTemplate()
     {
         return <<<EOT
@@ -48,6 +72,9 @@ class Dropzone extends Field
 EOT;
     }
 
+    /**
+     * @return string
+     */
     protected static function styles($id, $options)
     {
         $theme = $options['theme'] ?? 'light';
@@ -76,6 +103,9 @@ EOT;
 EOT;
     }
 
+    /**
+     * @return string
+     */
     protected static function js($id, $options)
     {
         $onComplete = $options['queue-complete'] ?? 'function () { window.location.reload() }';

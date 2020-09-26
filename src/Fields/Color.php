@@ -6,11 +6,19 @@ use SierraTecnologia\FormMaker\Fields\Field;
 
 class Color extends Field
 {
+    /**
+     * @return string
+     */
     protected static function getType()
     {
         return 'color';
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{before: string}
+     */
     protected static function getOptions()
     {
         return [
@@ -18,6 +26,9 @@ class Color extends Field
         ];
     }
 
+    /**
+     * @return string
+     */
     protected static function getFactory()
     {
         return 'safeColorName';

@@ -12,11 +12,16 @@ use SierraTecnologia\FormMaker\Generators\HtmlGenerator;
  */
 class InputMaker
 {
-    protected $htmlGenerator;
+    protected HtmlGenerator $htmlGenerator;
 
-    protected $inputCalibrator;
+    protected InputCalibrator $inputCalibrator;
 
-    protected $inputGroups = [
+    /**
+     * @var string[][]
+     *
+     * @psalm-var array{text: array{0: string, 1: string}, select: array{0: string}, hidden: array{0: string}, checkbox: array{0: string, 1: string}, radio: array{0: string, 1: string}, relationship: array{0: string}}
+     */
+    protected array $inputGroups = [
         'text' => [
             'text',
             'textarea',
@@ -40,12 +45,22 @@ class InputMaker
         ],
     ];
 
-    protected $standardMethods = [
+    /**
+     * @var string[]
+     *
+     * @psalm-var array{0: string, 1: string}
+     */
+    protected array $standardMethods = [
         'makeHidden',
         'makeText',
     ];
 
-    protected $selectedMethods = [
+    /**
+     * @var string[]
+     *
+     * @psalm-var array{0: string, 1: string, 2: string}
+     */
+    protected array $selectedMethods = [
         'makeSelected',
         'makeCheckbox',
         'makeRadio',
@@ -160,29 +175,6 @@ class InputMaker
     }
 
     /**
-     * Create a label for an input.
-     *
-     * @param string $name
-     * @param array  $attributes
-     *
-     * @return string
-     */
-    public function label($name, $attributes = [])
-    {
-        $attributeString = '';
-
-        if (!isset($attributes['for'])) {
-            $attributeString = 'for="'.$name.'"';
-        }
-
-        foreach ($attributes as $key => $value) {
-            $attributeString .= $key.'="'.$value.'" ';
-        }
-
-        return '<label '.$attributeString.'>'.$name.'</label>';
-    }
-
-    /**
      * Before input.
      *
      * @param array $config
@@ -231,7 +223,7 @@ class InputMaker
     /**
      * Get inputs.
      *
-     * @return array
+     * @return array|string
      */
     public function getInput()
     {
@@ -253,9 +245,11 @@ class InputMaker
      * @param array                                   $config
      * @param (array|bool|mixed|null|object|string)[] $inputConfig
      *
-     * @return array
+     * @return (mixed|string)[]
+     *
+     * @psalm-return array{inputType: mixed|string}
      */
-    private function refineConfigs(array $inputConfig, bool $reformatted, string $name, array $config)
+    private function refineConfigs(array $inputConfig, bool $reformatted, string $name, array $config): array
     {
         // If validation inputs are available lets prepopulate the fields!
         if (!empty($inputConfig['inputs']) && isset($inputConfig['inputs'][$name])) {
@@ -325,8 +319,10 @@ class InputMaker
      * @param array $config
      *
      * @return array
+     *
+     * @psalm-return array{type: mixed}
      */
-    public function prepareType($config)
+    public function prepareType($config): array
     {
         $config['type'] = $config['inputTypes']['string'];
 
@@ -360,7 +356,7 @@ class InputMaker
      *
      * @return string
      */
-    public function getGeneratorMethod($type)
+    public function getGeneratorMethod($type): string
     {
         switch ($type) {
         case in_array($type, $this->inputGroups['hidden']):

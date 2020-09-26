@@ -6,16 +6,25 @@ use SierraTecnologia\FormMaker\Fields\Field;
 
 class Slug extends Field
 {
+    /**
+     * @return string
+     */
     protected static function getType()
     {
         return 'text';
     }
 
+    /**
+     * @return string
+     */
     protected static function getFactory()
     {
         return 'text(50)';
     }
 
+    /**
+     * @return string
+     */
     protected static function js($id, $options)
     {
         return <<<EOT

@@ -41,6 +41,9 @@ class FieldServiceProvider extends ServiceProvider
         );
     }
 
+    /**
+     * @return void
+     */
     public function routes()
     {
         if ($this->app->routesAreCached()) {

@@ -6,11 +6,19 @@ use SierraTecnologia\FormMaker\Fields\Field;
 
 class Suggest extends Field
 {
+    /**
+     * @return string
+     */
     protected static function getType()
     {
         return 'select';
     }
 
+    /**
+     * @return (string|true)[]
+     *
+     * @psalm-return array{class: string, data-live-search: string, multiple: true}
+     */
     protected static function getAttributes()
     {
         return [
@@ -20,11 +28,19 @@ class Suggest extends Field
         ];
     }
 
+    /**
+     * @return string
+     */
     protected static function getFactory()
     {
         return 'text(50)';
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
     protected static function stylesheets($options)
     {
         return [
@@ -32,6 +48,11 @@ class Suggest extends Field
         ];
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
     protected static function scripts($options)
     {
         return [
@@ -39,6 +60,9 @@ class Suggest extends Field
         ];
     }
 
+    /**
+     * @return string
+     */
     protected static function js($id, $options)
     {
         $btn = $options['btn'] ?? 'btn-primary';

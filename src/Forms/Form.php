@@ -86,71 +86,6 @@ class Form
     }
 
     /**
-     * Generate a button form based on method and route
-     *
-     * @param  string $method
-     * @param  string $route
-     * @param  string $button
-     * @return void
-     */
-    public function action($method, $route, $button = 'Send', $options = [])
-    {
-        $this->html = $this->open(
-            [
-            'route' => $route,
-            'method' => $method,
-            'class' => config('form-maker.form.inline-class', 'form d-inline')
-            ]
-        );
-
-        $options = array_merge(
-            [
-            'class' => config('form-maker.buttons.submit', 'btn btn-primary')
-            ], $options
-        );
-
-        if (!empty($this->confirmMessage) && is_null($this->confirmMethod)) {
-            $options = array_merge(
-                $options, [
-                'onclick' => "return confirm('{$this->confirmMessage}')"
-                ]
-            );
-        }
-
-        if (!empty($this->confirmMessage) && !is_null($this->confirmMethod)) {
-            $options = array_merge(
-                $options, [
-                'onclick' => "{$this->confirmMethod}(event, '{$this->confirmMessage}')"
-                ]
-            );
-        }
-
-        $options['type'] = 'submit';
-
-        $this->html .= $this->field->button($button, $options);
-
-        $this->html .= $this->close();
-
-        return $this;
-    }
-
-    /**
-     * Set the confirmation message for delete forms
-     *
-     * @param string $message
-     * @param string $method
-     *
-     * @return \SierraTecnologia\FormMaker\Forms\ModelForm
-     */
-    public function confirm($message, $method = null)
-    {
-        $this->confirmMessage = $message;
-        $this->confirmMethod = $method;
-
-        return $this;
-    }
-
-    /**
      * Open up a new HTML form.
      *
      * cloned from LaravelCollective/html
@@ -185,9 +120,9 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @return string
+     * @return HtmlString
      */
-    public function close()
+    public function close(): HtmlString
     {
         return $this->toHtmlString('</form>');
     }
@@ -306,32 +241,6 @@ class Form
     }
 
     /**
-     * Set the model instance on the form builder.
-     *
-     * cloned from LaravelCollective/html
-     *
-     * @param mixed $model
-     *
-     * @return void
-     */
-    public function setModel($model)
-    {
-        $this->model = $model;
-    }
-
-    /**
-     * Get the current model instance on the form builder.
-     *
-     * cloned from LaravelCollective/html
-     *
-     * @return mixed $model
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    /**
      * Parse the form action method.
      *
      * cloned from LaravelCollective/html
@@ -340,7 +249,7 @@ class Form
      *
      * @return string
      */
-    protected function getMethod($method)
+    protected function getMethod($method): string
     {
         $method = strtoupper($method);
 

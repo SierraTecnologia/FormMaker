@@ -6,11 +6,19 @@ use SierraTecnologia\FormMaker\Fields\Field;
 
 class Datepicker extends Field
 {
+    /**
+     * @return string
+     */
     protected static function getType()
     {
         return 'text';
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{before: string}
+     */
     protected static function getOptions()
     {
         return [
@@ -18,11 +26,19 @@ class Datepicker extends Field
         ];
     }
 
+    /**
+     * @return string
+     */
     protected static function getFactory()
     {
         return 'date';
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
     protected static function stylesheets($options)
     {
         return [
@@ -30,6 +46,11 @@ class Datepicker extends Field
         ];
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string, 1: string}
+     */
     protected static function scripts($options)
     {
         return [
@@ -38,6 +59,9 @@ class Datepicker extends Field
         ];
     }
 
+    /**
+     * @return string
+     */
     protected static function styles($id, $options)
     {
         $theme = $options['theme'] ?? 'light';
@@ -90,6 +114,9 @@ class Datepicker extends Field
 EOT;
     }
 
+    /**
+     * @return string
+     */
     protected static function js($id, $options)
     {
         $startDay = $options['start-day'] ?? 1;

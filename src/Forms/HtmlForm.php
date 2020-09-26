@@ -50,17 +50,6 @@ class HtmlForm extends Form
     public $submitMethod = null;
 
     /**
-     * The route prefix, generally single form of model
-     *
-     * @var string
-
-     * Form fields as array
-     *
-     * @var array
-     */
-    public $fields = [];
-
-    /**
      * Html string for output
      *
      * @var string
@@ -146,7 +135,7 @@ class HtmlForm extends Form
      *
      * @return string
      */
-    protected function formButtonsAndClose()
+    protected function formButtonsAndClose(): string
     {
         $rowAlignment = config('form-maker.form.sections.row-alignment-end', 'd-flex justify-content-end');
 
@@ -191,9 +180,11 @@ class HtmlForm extends Form
     /**
      * Set the form sections
      *
-     * @return array
+     * @return array-key[][]
+     *
+     * @psalm-return array{0: list<array-key>}
      */
-    public function setSections()
+    public function setSections(): array
     {
         return [array_keys($this->parseFields($this->fields()))];
     }
@@ -217,9 +208,11 @@ class HtmlForm extends Form
     /**
      * Set the fields
      *
-     * @return \SierraTecnologia\FormMaker\Forms\ModelForm
+     * @return array
+     *
+     * @psalm-return array<empty, empty>
      */
-    public function fields()
+    public function fields(): array
     {
         return [];
     }
@@ -231,7 +224,7 @@ class HtmlForm extends Form
      *
      * @return array
      */
-    protected function parseFields($formFields)
+    protected function parseFields($formFields): array
     {
         $fields = [];
 
@@ -245,18 +238,6 @@ class HtmlForm extends Form
         }
 
         return $fields;
-    }
-
-    /**
-     * Set the html to the rendered fields
-     *
-     * @return void
-     */
-    public function renderedFields()
-    {
-        $this->html = $this->renderedFields;
-
-        return $this;
     }
 
     /**

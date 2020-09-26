@@ -6,11 +6,19 @@ use SierraTecnologia\FormMaker\Fields\Field;
 
 class FileWithPreview extends Field
 {
+    /**
+     * @return string
+     */
     protected static function getType()
     {
         return 'file';
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{onChange: string}
+     */
     protected static function getAttributes()
     {
         return [
@@ -18,11 +26,17 @@ class FileWithPreview extends Field
         ];
     }
 
+    /**
+     * @return string
+     */
     protected static function getFactory()
     {
         return 'image';
     }
 
+    /**
+     * @return string
+     */
     protected static function getTemplate()
     {
         return <<<EOT
@@ -36,6 +50,9 @@ class FileWithPreview extends Field
 EOT;
     }
 
+    /**
+     * @return string
+     */
     protected static function js($id, $options)
     {
         $preview = $options['preview_identifier'] ?? '';

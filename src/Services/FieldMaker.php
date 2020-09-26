@@ -8,11 +8,16 @@ use SierraTecnologia\FormMaker\Builders\FieldBuilder;
 
 class FieldMaker
 {
-    protected $builder;
+    protected FieldBuilder $builder;
 
     public $orientation;
 
-    protected $standard = [
+    /**
+     * @var string[]
+     *
+     * @psalm-var array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string, 7: string, 8: string, 9: string, 10: string, 11: string, 12: string, 13: string, 14: string, 15: string, 16: string, 17: string}
+     */
+    protected array $standard = [
         'hidden',
         'text',
         'number',
@@ -33,24 +38,29 @@ class FieldMaker
         'file',
     ];
 
-    protected $special = [
+    /**
+     * @var string[]
+     *
+     * @psalm-var array{0: string, 1: string, 2: string, 3: string}
+     */
+    protected array $special = [
         'select',
         'custom-file',
         'textarea',
         'relationship',
     ];
 
-    protected $specialSelect = [
+    /**
+     * @var string[]
+     *
+     * @psalm-var array{0: string, 1: string, 2: string, 3: string}
+     */
+    protected array $specialSelect = [
         'checkbox',
         'radio',
         'checkbox-inline',
         'radio-inline',
     ];
-
-    public function __construct(FieldBuilder $fieldBuilder)
-    {
-        $this->builder = $fieldBuilder;
-    }
 
     public function make(string $column, array $columnConfig, $object = null)
     {
@@ -179,7 +189,7 @@ class FieldMaker
         return $this->wrapField($fieldGroup, $label, $fieldString, $errors);
     }
 
-    public function label(string $column, array $columnConfig, $class = null, $errors)
+    public function label(string $column, array $columnConfig, $class = null, $errors): string
     {
         $label = Str::title($column);
         $label = str_replace('_', ' ', $label);
@@ -205,7 +215,7 @@ class FieldMaker
         return "<label class=\"{$class}\" for=\"{$id}\">{$label}</label>";
     }
 
-    public function wrapField($fieldGroup, $label, string $fieldString, $errors)
+    public function wrapField($fieldGroup, $label, string $fieldString, $errors): string
     {
         if (Str::contains($fieldString, 'hidden')) {
             return $fieldString;
@@ -239,7 +249,7 @@ class FieldMaker
         return '';
     }
 
-    public function getFieldErrors(string $column)
+    public function getFieldErrors(string $column): string
     {
         $textError = config('form-maker.form.text-error', 'text-danger');
 
@@ -257,7 +267,7 @@ class FieldMaker
         return '';
     }
 
-    public function before(array $columnConfig)
+    public function before(array $columnConfig): string
     {
         $prefix = '';
 
@@ -269,7 +279,7 @@ class FieldMaker
         return $prefix;
     }
 
-    public function after(array $columnConfig)
+    public function after(array $columnConfig): string
     {
         $postfix = '';
 
@@ -282,12 +292,13 @@ class FieldMaker
 
     /**
      * @param array $options
+     *
+     * @return string
      */
-    private function fieldTemplate($template, array $options)
+    private function fieldTemplate($template, array $options): string
     {
         $keys = [];
         $values = [];
-        $processedTemplate = '';
 
         foreach ($options as $key => $option) {
             $keys[] = "{{$key}}";
@@ -297,6 +308,9 @@ class FieldMaker
         return str_replace($keys, $values, $template);
     }
 
+    /**
+     * @return array|null|string
+     */
     private function getOldValue(string $column)
     {
         if (session()->isStarted()) {
@@ -306,7 +320,12 @@ class FieldMaker
         return null;
     }
 
-    private function parseOptions(string $name, array $options)
+    /**
+     * @return (array|mixed)[]
+     *
+     * @psalm-return array{attributes: array}
+     */
+    private function parseOptions(string $name, array $options): array
     {
         $default = [
             'class' => config('form-maker.form.input-class', 'form-control'),
@@ -318,12 +337,17 @@ class FieldMaker
         return $options;
     }
 
-    private function stripArrayHandles($column)
+    private function stripArrayHandles(string $column): string
     {
         return str_replace('[]', '', ucfirst($column));
     }
 
-    private function getNestedFieldLabel(string $label)
+    /**
+     * @return string[]
+     *
+     * @psalm-return list<string>
+     */
+    private function getNestedFieldLabel(string $label): array
     {
         preg_match_all("/\[([^\]]*)\]/", $label, $matches);
 
