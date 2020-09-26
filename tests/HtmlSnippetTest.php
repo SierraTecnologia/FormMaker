@@ -51,9 +51,11 @@ class HtmlSnippetTest extends TestCase
 
     public function testHeadingTag()
     {
-        $snippet = Heading::make([
+        $snippet = Heading::make(
+            [
             'content' => 'Billing Details'
-        ]);
+            ]
+        );
 
         $keys = array_keys($snippet);
 
@@ -63,9 +65,11 @@ class HtmlSnippetTest extends TestCase
 
     public function testDivTag()
     {
-        $snippet = Div::make([
+        $snippet = Div::make(
+            [
             'content' => '<p class="foo">Bar</p>'
-        ]);
+            ]
+        );
 
         $keys = array_keys($snippet);
 

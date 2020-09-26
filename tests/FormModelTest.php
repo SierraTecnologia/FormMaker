@@ -27,9 +27,11 @@ class UserForm extends ModelForm
     public function fields()
     {
         return [
-            Name::make('name', [
+            Name::make(
+                'name', [
                 'value' => $this->getSpecialName()
-            ]),
+                ]
+            ),
             Email::make('email'),
             Quill::make('history')
         ];
@@ -51,9 +53,11 @@ class FormModelTest extends TestCase
     {
         parent::setUp();
 
-        $this->session([
+        $this->session(
+            [
             'token' => 'tester',
-        ]);
+            ]
+        );
 
         Route::post('users')->name('users.store');
         Route::get('users')->name('users.index');

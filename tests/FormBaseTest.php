@@ -26,9 +26,11 @@ class FormBaseTest extends TestCase
     {
         parent::setUp();
 
-        $this->session([
+        $this->session(
+            [
             'token' => 'tester',
-        ]);
+            ]
+        );
 
         Route::post('user/security')->name('user.security');
 

@@ -10,9 +10,11 @@ class MakeFormFactoryCommandTest extends TestCase
 
         @unlink($this->path);
 
-        $this->artisan('make:form-factory', [
+        $this->artisan(
+            'make:form-factory', [
             'form' => UserForm::class
-        ]);
+            ]
+        );
     }
 
     public function testFileHasBeenGenerated()

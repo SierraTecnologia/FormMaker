@@ -61,10 +61,12 @@ class FormMakerTest extends TestCase
 
     public function testFromFields()
     {
-        $test = $this->formMaker->fromFields([
+        $test = $this->formMaker->fromFields(
+            [
             Text::make('name'),
             TextArea::make('details'),
-        ]);
+            ]
+        );
 
         $this->assertTrue(is_string($test));
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Name">Name</label><input  class="form-control" id="Name" name="name" type="text" value=""></div><div class="form-group"><label class="control-label" for="Details">Details</label><textarea  class="form-control" id="Details" rows="5" name="details"></textarea></div>', $test);
@@ -72,10 +74,12 @@ class FormMakerTest extends TestCase
 
     public function testFromTableSimulated()
     {
-        $entry = app(Entry::class)->create([
+        $entry = app(Entry::class)->create(
+            [
             'name' => 'test entry',
             'details' => 'this entry is written in [markdown](http://markdown.com)',
-        ]);
+            ]
+        );
 
         $test = $this->formMaker
             ->setConnection('testbench')

@@ -12,9 +12,11 @@ class FormTest extends TestCase
     {
         parent::setUp();
 
-        $this->session([
+        $this->session(
+            [
             'token' => 'tester',
-        ]);
+            ]
+        );
 
         Route::post('foo')->name('going.somewhere');
 
@@ -23,12 +25,14 @@ class FormTest extends TestCase
 
     public function testOpen()
     {
-        $form = $this->form->open([
+        $form = $this->form->open(
+            [
             'url' => [
                 'somewhere/special'
             ],
             'files' => true,
-        ]);
+            ]
+        );
 
         $this->assertStringContainsString('http://localhost/somewhere/special', $form);
         $this->assertStringContainsString('method="POST"', $form);

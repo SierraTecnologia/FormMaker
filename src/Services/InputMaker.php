@@ -247,10 +247,10 @@ class InputMaker
     /**
      * Set the configs.
      *
-     * @param array  $config
-     * @param bool   $reformatted
-     * @param string $name
-     * @param array  $config
+     * @param array                                   $config
+     * @param bool                                    $reformatted
+     * @param string                                  $name
+     * @param array                                   $config
      * @param (array|bool|mixed|null|object|string)[] $inputConfig
      *
      * @return array

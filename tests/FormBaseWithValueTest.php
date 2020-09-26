@@ -16,9 +16,11 @@ class UserWithValueForm extends BaseForm
     public function fields()
     {
         return [
-            Email::make('email', [
+            Email::make(
+                'email', [
                 'value' => 'foobar@foo.com',
-            ]),
+                ]
+            ),
         ];
     }
 }
@@ -29,9 +31,11 @@ class FormBaseWithValueTest extends TestCase
     {
         parent::setUp();
 
-        $this->session([
+        $this->session(
+            [
             'token' => 'tester',
-        ]);
+            ]
+        );
 
         Route::post('user/settings')->name('user.settings');
 

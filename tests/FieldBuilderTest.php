@@ -48,9 +48,11 @@ class FieldBuilderTest extends TestCase
 
     public function testAttributes()
     {
-        $test = $this->builder->attributes([
+        $test = $this->builder->attributes(
+            [
             'placeholder' => 'thing'
-        ]);
+            ]
+        );
 
         $this->assertTrue(is_string($test));
         $this->assertEquals(' placeholder="thing"', $test);
@@ -66,12 +68,14 @@ class FieldBuilderTest extends TestCase
 
     public function testMakeCustomFile()
     {
-        $test = $this->builder->makeCustomFile('avatar', null, [
+        $test = $this->builder->makeCustomFile(
+            'avatar', null, [
             'attributes' => [
                 'id' => 'Avatar',
                 'class' => 'foo-class'
             ]
-        ]);
+            ]
+        );
 
         $this->assertTrue(is_string($test));
         $this->assertEquals('<div class="custom-file"><input  id="Avatar" class="foo-class" class="custom-file-input" type="file" name="avatar"><label class="custom-file-label" for="Avatar">Choose file</label></div>', $test);
@@ -79,12 +83,14 @@ class FieldBuilderTest extends TestCase
 
     public function testMakeTextarea()
     {
-        $test = $this->builder->makeTextarea('avatar', null, [
+        $test = $this->builder->makeTextarea(
+            'avatar', null, [
             'attributes' => [
                 'id' => 'Avatar',
                 'class' => 'foo-class'
             ]
-        ]);
+            ]
+        );
 
         $this->assertTrue(is_string($test));
         $this->assertEquals('<textarea  id="Avatar" class="foo-class" name="avatar"></textarea>', $test);
@@ -92,12 +98,14 @@ class FieldBuilderTest extends TestCase
 
     public function testMakeCheckboxInline()
     {
-        $test = $this->builder->makeCheckboxInline('avatar', null, [
+        $test = $this->builder->makeCheckboxInline(
+            'avatar', null, [
             'attributes' => [
                 'id' => 'Avatar',
                 'class' => 'foo-class'
             ]
-        ]);
+            ]
+        );
 
         $this->assertTrue(is_string($test));
         $this->assertEquals('<input  id="Avatar" class="foo-class" type="checkbox" name="avatar" >', $test);
@@ -105,12 +113,14 @@ class FieldBuilderTest extends TestCase
 
     public function testMakeRadioInline()
     {
-        $test = $this->builder->makeRadioInline('avatar', null, [
+        $test = $this->builder->makeRadioInline(
+            'avatar', null, [
             'attributes' => [
                 'id' => 'Avatar',
                 'class' => 'foo-class'
             ]
-        ]);
+            ]
+        );
 
         $this->assertTrue(is_string($test));
         $this->assertEquals('<input  id="Avatar" class="foo-class" type="radio" name="avatar" >', $test);
@@ -118,7 +128,8 @@ class FieldBuilderTest extends TestCase
 
     public function testMakeSelect()
     {
-        $test = $this->builder->makeSelect('avatar', null, [
+        $test = $this->builder->makeSelect(
+            'avatar', null, [
             'attributes' => [
                 'id' => 'Avatar',
                 'class' => 'foo-class'
@@ -127,7 +138,8 @@ class FieldBuilderTest extends TestCase
                 'matt' => 'Matt',
                 'cassandra' => 'Cassandra',
             ]
-        ]);
+            ]
+        );
 
         $this->assertTrue(is_string($test));
         $this->assertEquals('<select  id="Avatar" class="foo-class" name="avatar"><option value="Matt" >matt</option><option value="Cassandra" >cassandra</option></select>', $test);
@@ -135,7 +147,8 @@ class FieldBuilderTest extends TestCase
 
     public function testMakeSelectWithValue()
     {
-        $test = $this->builder->makeSelect('avatar', 'matt', [
+        $test = $this->builder->makeSelect(
+            'avatar', 'matt', [
             'attributes' => [
                 'id' => 'Avatar',
                 'class' => 'foo-class'
@@ -144,7 +157,8 @@ class FieldBuilderTest extends TestCase
                 'Matt' => 'matt',
                 'Cassandra' => 'cassandra',
             ]
-        ]);
+            ]
+        );
 
         $this->assertTrue(is_string($test));
         $this->assertEquals('<select  id="Avatar" class="foo-class" name="avatar"><option value="matt" selected>Matt</option><option value="cassandra" >Cassandra</option></select>', $test);
@@ -152,14 +166,16 @@ class FieldBuilderTest extends TestCase
 
     public function testMakeCheckInput()
     {
-        $test = $this->builder->makeCheckInput('avatar', null, [
+        $test = $this->builder->makeCheckInput(
+            'avatar', null, [
             'type' => 'radio',
             'label' => 'foo',
             'attributes' => [
                 'id' => 'Avatar',
                 'class' => 'foo-class'
             ]
-        ]);
+            ]
+        );
 
         $this->assertTrue(is_string($test));
         $this->assertEquals('<div class="form-check"><input  id="Avatar" class="form-check-input" type="checkbox" name="avatar" ><label class="form-check-label">foo</label></div>', $test);
@@ -167,12 +183,14 @@ class FieldBuilderTest extends TestCase
 
     public function testMakeCheckbox()
     {
-        $test = $this->builder->makeCheckbox('avatar', null, [
+        $test = $this->builder->makeCheckbox(
+            'avatar', null, [
             'attributes' => [
                 'id' => 'Avatar',
                 'class' => 'foo-class'
             ]
-        ]);
+            ]
+        );
 
         $this->assertTrue(is_string($test));
         $this->assertEquals('<input  id="Avatar" class="foo-class" type="checkbox" name="avatar" >', $test);
@@ -180,12 +198,14 @@ class FieldBuilderTest extends TestCase
 
     public function testMakeRadio()
     {
-        $test = $this->builder->makeRadio('avatar', null, [
+        $test = $this->builder->makeRadio(
+            'avatar', null, [
             'attributes' => [
                 'id' => 'Avatar',
                 'class' => 'foo-class'
             ]
-        ]);
+            ]
+        );
 
         $this->assertTrue(is_string($test));
         $this->assertEquals('<input  id="Avatar" class="foo-class" type="radio" name="avatar" >', $test);
@@ -193,17 +213,24 @@ class FieldBuilderTest extends TestCase
 
     public function testMakeRelationshipWithNone()
     {
-        app(Job::class)->create([
+        app(Job::class)->create(
+            [
             'name' => 'BlackSmith',
-        ]);
-        app(Job::class)->create([
+            ]
+        );
+        app(Job::class)->create(
+            [
             'name' => 'Police',
-        ]);
-        app(Job::class)->create([
+            ]
+        );
+        app(Job::class)->create(
+            [
             'name' => 'Brogrammer',
-        ]);
+            ]
+        );
 
-        $test = $this->builder->makeRelationship('avatar', null, [
+        $test = $this->builder->makeRelationship(
+            'avatar', null, [
             'model' => Job::class,
             'options' => app(Job::class)->all()->pluck('id', 'name')->toArray(),
             'null_value' => true,
@@ -212,7 +239,8 @@ class FieldBuilderTest extends TestCase
                 'id' => 'Avatar',
                 'class' => 'foo-class'
             ]
-        ]);
+            ]
+        );
 
         $this->assertTrue(is_string($test));
         $this->assertEquals('<select  id="Avatar" class="foo-class" name="avatar"><option value="" selected>foo</option><option value="1" >BlackSmith</option><option value="2" >Police</option><option value="3" >Brogrammer</option></select>', $test);
@@ -220,24 +248,32 @@ class FieldBuilderTest extends TestCase
 
     public function testMakeRelationship()
     {
-        app(Job::class)->create([
+        app(Job::class)->create(
+            [
             'name' => 'BlackSmith',
-        ]);
-        app(Job::class)->create([
+            ]
+        );
+        app(Job::class)->create(
+            [
             'name' => 'Police',
-        ]);
-        app(Job::class)->create([
+            ]
+        );
+        app(Job::class)->create(
+            [
             'name' => 'Brogrammer',
-        ]);
+            ]
+        );
 
-        $test = $this->builder->makeRelationship('avatar', null, [
+        $test = $this->builder->makeRelationship(
+            'avatar', null, [
             'model' => Job::class,
             'options' => app(Job::class)->all()->pluck('id', 'name')->toArray(),
             'attributes' => [
                 'id' => 'Avatar',
                 'class' => 'foo-class'
             ]
-        ]);
+            ]
+        );
 
         $this->assertTrue(is_string($test));
         $this->assertEquals('<select  id="Avatar" class="foo-class" name="avatar"><option value="1" >BlackSmith</option><option value="2" >Police</option><option value="3" >Brogrammer</option></select>', $test);
@@ -260,18 +296,22 @@ class FieldBuilderTest extends TestCase
         $test = $this->builder->isChecked('foo', ['foo'], []);
         $this->assertEquals('checked', $test);
 
-        $test = $this->builder->isChecked('foo', null, [
+        $test = $this->builder->isChecked(
+            'foo', null, [
             'attributes' => [
                 'value' => 'foo'
             ]
-        ]);
+            ]
+        );
         $this->assertEquals('', $test);
 
-        $test = $this->builder->isChecked('foo', 'foo', [
+        $test = $this->builder->isChecked(
+            'foo', 'foo', [
             'attributes' => [
                 'value' => 'foo'
             ]
-        ]);
+            ]
+        );
         $this->assertEquals('checked', $test);
     }
 }

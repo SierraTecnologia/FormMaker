@@ -33,9 +33,11 @@ class FieldTest extends TestCase
 {
     public function testText()
     {
-        $field = Text::make('address', [
+        $field = Text::make(
+            'address', [
             'placeholder' => 'address'
-        ]);
+            ]
+        );
 
         $this->assertEquals('address', array_key_first($field));
         $this->assertEquals('address', $field['address']['attributes']['placeholder']);
@@ -43,9 +45,11 @@ class FieldTest extends TestCase
 
     public function testEmail()
     {
-        $field = Email::make('address', [
+        $field = Email::make(
+            'address', [
             'placeholder' => 'address'
-        ]);
+            ]
+        );
 
         $this->assertEquals('address', array_key_first($field));
         $this->assertEquals('address', $field['address']['attributes']['placeholder']);
@@ -53,9 +57,11 @@ class FieldTest extends TestCase
 
     public function testCheckbox()
     {
-        $field = Checkbox::make('wants_emails', [
+        $field = Checkbox::make(
+            'wants_emails', [
             'placeholder' => 'wants_emails'
-        ]);
+            ]
+        );
 
         $this->assertEquals('wants_emails', array_key_first($field));
         $this->assertEquals('wants_emails', $field['wants_emails']['attributes']['placeholder']);
@@ -210,13 +216,15 @@ class FieldTest extends TestCase
 
     public function testSelect()
     {
-        $field = Select::make('field', [
+        $field = Select::make(
+            'field', [
             'options' => [
                 'joe' => 'joe',
                 'john' => 'john',
                 'katie' => 'katie',
             ]
-        ]);
+            ]
+        );
 
         $this->assertEquals('field', array_key_first($field));
         $this->assertEquals('select', $field['field']['type']);
@@ -265,9 +273,11 @@ class FieldTest extends TestCase
 
     public function testTypeahead()
     {
-        $field = Typeahead::make('names', [
+        $field = Typeahead::make(
+            'names', [
             'matches' => json_encode(["Alfred", "Jarvis"])
-        ]);
+            ]
+        );
 
         $this->assertEquals('names', array_key_first($field));
         $this->assertEquals(json_encode(["Alfred", "Jarvis"]), $field['names']['attributes']['matches']);

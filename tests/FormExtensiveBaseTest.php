@@ -47,9 +47,11 @@ class UserSampleCreateForm extends BaseForm
     {
         return [
             Text::make('name'),
-            Checkbox::make('is_cool', [
+            Checkbox::make(
+                'is_cool', [
                 'class' => 'batman-style'
-            ])
+                ]
+            )
         ];
     }
 }
@@ -60,9 +62,11 @@ class FormExtensiveBaseTest extends TestCase
     {
         parent::setUp();
 
-        $this->session([
+        $this->session(
+            [
             'token' => 'tester',
-        ]);
+            ]
+        );
 
         Route::post('user/sample')->name('user.sample');
 

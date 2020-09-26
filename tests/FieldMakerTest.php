@@ -112,7 +112,8 @@ class FieldMakerTest extends TestCase
     public function testCreateMultipleSelect()
     {
         $object = (object) ['countries' => json_encode(['Canada', 'America'])];
-        $config = Select::make('countries', [
+        $config = Select::make(
+            'countries', [
             'multiple' => true,
             'options' => [
                 'Canada' => 'Canada',
@@ -120,7 +121,8 @@ class FieldMakerTest extends TestCase
                 'UK' => 'UK',
                 'Ireland' => 'Ireland',
             ],
-        ]);
+            ]
+        );
         $field = $this->fieldMaker->make('countries', $config['countries'], $object);
 
         $this->assertTrue(is_string($field));
@@ -129,15 +131,19 @@ class FieldMakerTest extends TestCase
 
     public function testCreateMultipleNestedString()
     {
-        $entry = app(Entry::class)->create([
+        $entry = app(Entry::class)->create(
+            [
             'name' => 'test entry',
             'details' => 'this entry is written in',
-        ]);
+            ]
+        );
 
-        $config = Number::make('meta[user[id]]', [
+        $config = Number::make(
+            'meta[user[id]]', [
             'label' => 'Meta Id',
             'id' => 'MetaId',
-        ]);
+            ]
+        );
 
         $field = $this->fieldMaker->make('meta[user[id]]', $config['meta[user[id]]'], $entry);
 
@@ -147,10 +153,12 @@ class FieldMakerTest extends TestCase
 
     public function testCreateSingleNestedString()
     {
-        $entry = app(Entry::class)->create([
+        $entry = app(Entry::class)->create(
+            [
             'name' => 'test entry',
             'details' => 'this entry is written in',
-        ]);
+            ]
+        );
 
         $config = Text::make('meta[created_at]');
 
@@ -162,10 +170,12 @@ class FieldMakerTest extends TestCase
 
     public function testCreateSpecialString()
     {
-        $entry = app(Entry::class)->create([
+        $entry = app(Entry::class)->create(
+            [
             'name' => 'test entry',
             'details' => 'this entry is written in [markdown](http://markdown.com)',
-        ]);
+            ]
+        );
 
         $config = TextArea::make('details');
 
@@ -177,37 +187,49 @@ class FieldMakerTest extends TestCase
 
     public function testCreateRelationshipWithoutObject()
     {
-        $user = app(User::class)->create([
+        $user = app(User::class)->create(
+            [
             'name' => 'Joe',
             'email' => 'joe@haltandcatchfire.com',
             'password' => 'password',
-        ]);
+            ]
+        );
 
-        $job = app(Job::class)->create([
+        $job = app(Job::class)->create(
+            [
             'name' => 'Worker',
             'user_id' => 1,
-        ]);
+            ]
+        );
 
         $user->job_id = $job->id;
         $user->save();
 
-        app(Job::class)->create([
+        app(Job::class)->create(
+            [
             'name' => 'BlackSmith',
-        ]);
-        app(Job::class)->create([
+            ]
+        );
+        app(Job::class)->create(
+            [
             'name' => 'Police',
-        ]);
-        app(Job::class)->create([
+            ]
+        );
+        app(Job::class)->create(
+            [
             'name' => 'Brogrammer',
-        ]);
+            ]
+        );
 
-        $config = HasMany::make('jobs', [
+        $config = HasMany::make(
+            'jobs', [
             'model' => Job::class,
             'model_options' => [
                 'label' => 'name',
                 'value' => 'id',
             ]
-        ]);
+            ]
+        );
 
         $field = $this->fieldMaker->make('jobs', $config['jobs']);
 
@@ -215,36 +237,48 @@ class FieldMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select  class="form-control" id="Jobs" multiple name="jobs[]"><option value="1" >Worker</option><option value="2" >BlackSmith</option><option value="3" >Police</option><option value="4" >Brogrammer</option></select></div>', $field);
     }
 
-     public function testCreateRelationshipWithoutObjectWithForcedOptions()
+    public function testCreateRelationshipWithoutObjectWithForcedOptions()
     {
-        $user = app(User::class)->create([
+        $user = app(User::class)->create(
+            [
             'name' => 'Joe',
             'email' => 'joe@haltandcatchfire.com',
             'password' => 'password',
-        ]);
+            ]
+        );
 
-        $job = app(Job::class)->create([
+        $job = app(Job::class)->create(
+            [
             'name' => 'Worker',
             'user_id' => 1,
-        ]);
+            ]
+        );
 
         $user->job_id = $job->id;
         $user->save();
 
-        app(Job::class)->create([
+        app(Job::class)->create(
+            [
             'name' => 'BlackSmith',
-        ]);
-        app(Job::class)->create([
+            ]
+        );
+        app(Job::class)->create(
+            [
             'name' => 'Police',
-        ]);
-        app(Job::class)->create([
+            ]
+        );
+        app(Job::class)->create(
+            [
             'name' => 'Brogrammer',
-        ]);
+            ]
+        );
 
-        $config = HasMany::make('jobs', [
+        $config = HasMany::make(
+            'jobs', [
             'model' => Job::class,
             'options' => app(Job::class)->all()->pluck('id', 'name')->toArray(),
-        ]);
+            ]
+        );
 
         $field = $this->fieldMaker->make('jobs', $config['jobs']);
 
@@ -254,37 +288,49 @@ class FieldMakerTest extends TestCase
 
     public function testCreateRelationshipHasOne()
     {
-        $user = app(User::class)->create([
+        $user = app(User::class)->create(
+            [
             'name' => 'Joe',
             'email' => 'joe@haltandcatchfire.com',
             'password' => 'password',
-        ]);
+            ]
+        );
 
-        $job = app(Job::class)->create([
+        $job = app(Job::class)->create(
+            [
             'name' => 'Worker',
             'user_id' => 1,
-        ]);
+            ]
+        );
 
         $user->job_id = $job->id;
         $user->save();
 
-        app(Job::class)->create([
+        app(Job::class)->create(
+            [
             'name' => 'BlackSmith',
-        ]);
-        app(Job::class)->create([
+            ]
+        );
+        app(Job::class)->create(
+            [
             'name' => 'Police',
-        ]);
-        app(Job::class)->create([
+            ]
+        );
+        app(Job::class)->create(
+            [
             'name' => 'Brogrammer',
-        ]);
+            ]
+        );
 
-        $config = HasOne::make('jobs', [
+        $config = HasOne::make(
+            'jobs', [
             'model' => Job::class,
             'model_options' => [
                 'label' => 'name',
                 'value' => 'id',
             ]
-        ]);
+            ]
+        );
 
         $field = $this->fieldMaker->make('jobs', $config['jobs'], $user);
 
@@ -294,31 +340,42 @@ class FieldMakerTest extends TestCase
 
     public function testCreateRelationshipCustom()
     {
-        $user = app(User::class)->create([
+        $user = app(User::class)->create(
+            [
             'name' => 'Joe',
             'email' => 'joe@haltandcatchfire.com',
             'password' => 'password',
-        ]);
+            ]
+        );
 
-        $job = app(Job::class)->create([
+        $job = app(Job::class)->create(
+            [
             'name' => 'Worker',
             'user_id' => 1,
-        ]);
+            ]
+        );
 
         $user->job_id = $job->id;
         $user->save();
 
-        app(Job::class)->create([
+        app(Job::class)->create(
+            [
             'name' => 'BlackSmith',
-        ]);
-        app(Job::class)->create([
+            ]
+        );
+        app(Job::class)->create(
+            [
             'name' => 'Police',
-        ]);
-        app(Job::class)->create([
+            ]
+        );
+        app(Job::class)->create(
+            [
             'name' => 'Brogrammer',
-        ]);
+            ]
+        );
 
-        $config = HasOne::make('jobs', [
+        $config = HasOne::make(
+            'jobs', [
             'model' => Job::class,
             'model_options' => [
                 'method' => 'custom',
@@ -328,7 +385,8 @@ class FieldMakerTest extends TestCase
                 'label' => 'name',
                 'value' => 'id',
             ],
-        ]);
+            ]
+        );
 
         $field = $this->fieldMaker->make('jobs', $config['jobs'], $user);
 
@@ -338,35 +396,47 @@ class FieldMakerTest extends TestCase
 
     public function testCreateRelationshipCustomMultiple()
     {
-        $user = app(User::class)->create([
+        $user = app(User::class)->create(
+            [
             'name' => 'Joe',
             'email' => 'joe@haltandcatchfire.com',
             'password' => 'password',
-        ]);
+            ]
+        );
 
-        $idea1 = app(Idea::class)->create([
+        $idea1 = app(Idea::class)->create(
+            [
             'name' => 'Thing',
-        ]);
-        $idea2 = app(Idea::class)->create([
+            ]
+        );
+        $idea2 = app(Idea::class)->create(
+            [
             'name' => 'Foo',
-        ]);
+            ]
+        );
 
-        app(Idea::class)->create([
+        app(Idea::class)->create(
+            [
             'name' => 'Bar',
-        ]);
-        app(Idea::class)->create([
+            ]
+        );
+        app(Idea::class)->create(
+            [
             'name' => 'Drink',
-        ]);
+            ]
+        );
 
         $user->ideas()->attach([$idea1->id, $idea2->id]);
 
-        $config = HasMany::make('ideas', [
+        $config = HasMany::make(
+            'ideas', [
             'model' => Idea::class,
             'model_options' => [
                 'label' => 'name',
                 'value' => 'id',
             ],
-        ]);
+            ]
+        );
 
         $field = $this->fieldMaker->make('ideas', $config['ideas'], $user);
 

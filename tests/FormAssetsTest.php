@@ -32,9 +32,11 @@ class FormAssetsTest extends TestCase
 
         $this->formAssets = app(FormAssets::class);
 
-        $this->session([
+        $this->session(
+            [
             'token' => 'tester',
-        ]);
+            ]
+        );
 
         Route::post('user/history')->name('user.history');
 

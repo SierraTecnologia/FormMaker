@@ -10,9 +10,11 @@ class MakeFieldCommandTest extends TestCase
 
         @unlink($this->path);
 
-        $this->artisan('make:field', [
+        $this->artisan(
+            'make:field', [
             'name' => 'Special'
-        ]);
+            ]
+        );
     }
 
     public function testFileHasBeenGenerated()
