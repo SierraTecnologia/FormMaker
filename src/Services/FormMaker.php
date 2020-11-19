@@ -313,6 +313,12 @@ class FormMaker
     {
         $formSections = [];
 
+        // @todo fix bug (Tentando corrigir qnd nao tem section)
+        if (empty($this->sections)) {
+            // return implode("", $formBuild);
+            return $this->buildSection($formBuild, $columns, null);
+        }
+
         foreach ($this->sections as $section => $fields) {
             $label = null;
 

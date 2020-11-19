@@ -52,9 +52,44 @@ class FieldMaker
         $this->builder = $fieldBuilder;
     }
 
+    private function convertType(string $type): string 
+    {
+        $configs = config('form-maker.inputTypes', [
+            'number'            => 'number',
+            'integer'           => 'number',
+            'float'             => 'number',
+            'decimal'           => 'number',
+            'boolean'           => 'number',
+            'string'            => 'text',
+            'email'             => 'text',
+            'varchar'           => 'text',
+            'file'              => 'file',
+            'image'             => 'file',
+            'datetime'          => 'date',
+            'date'              => 'date',
+            'password'          => 'password',
+            'textarea'          => 'textarea',
+            'select'            => null,
+            'checkbox'          => null,
+            'checkbox-inline'   => null,
+            'radio'             => null,
+            'radio-inline'      => null,
+        ]);
+
+        if (isset($configs[$type]) && !is_null($configs[$type])) {
+            return $configs[$type];
+        }
+        return $type;
+    }
+
     public function make(string $column, array $columnConfig, $object = null)
     {
-        if ($columnConfig['type'] === 'html') {
+        if (!isset($columnConfig['type'])) {
+            \Log::info('Tipo de Campo sem valor Type', [
+                $column,  $columnConfig, $object
+            ]);
+        }
+        if (isset($columnConfig['type']) && $columnConfig['type'] === 'html') {
             return $columnConfig['content'];
         }
 
@@ -75,7 +110,9 @@ class FieldMaker
 
         $label = $this->label($column, $columnConfig, null, $errors);
 
-        if (in_array($columnConfig['type'], $this->standard)) {
+        if (isset($columnConfig['type']) && (
+            in_array($columnConfig['type'], $this->standard) || in_array($this->convertType($columnConfig['type']), $this->standard)
+        )) {
             $field = $this->builder->makeInput(
                 $columnConfig['type'],
                 $column,
@@ -84,7 +121,7 @@ class FieldMaker
             );
         }
 
-        if (in_array($columnConfig['type'], $this->special)) {
+        if (isset($columnConfig['type']) && (in_array($columnConfig['type'], $this->special) || in_array($this->convertType($columnConfig['type']), $this->special))) {
             $method = 'make' . ucfirst(Str::camel($columnConfig['type']));
             $field = $this->builder->$method(
                 $column,
@@ -138,7 +175,7 @@ class FieldMaker
             )->render();
         }
 
-        if (in_array($columnConfig['type'], $this->specialSelect)) {
+        if (isset($columnConfig['type']) && in_array($columnConfig['type'], $this->specialSelect)) {
             $label = '';
 
             $field = $this->builder->makeCheckInput(
@@ -148,8 +185,8 @@ class FieldMaker
             );
         }
 
-        if (is_null($field)) {
-            $field = $this->builder->makeField(
+        if (is_null($field) && isset($columnConfig['type'])) {
+            $field = $this->builder->makeInput( // @todo Alterei pq o html5 string nao existe makeField(
                 $columnConfig['type'],
                 $column,
                 $value,
@@ -168,7 +205,7 @@ class FieldMaker
 
             $label = $this->label($column, $columnConfig, $labelColumn, $errors);
 
-            if (in_array($columnConfig['type'], $this->specialSelect)) {
+            if (isset($columnConfig['type']) && in_array($columnConfig['type'], $this->specialSelect)) {
                 $legend = $columnConfig['legend'] ?? $columnConfig['label'];
                 $label = "<legend class=\"{$labelColumn}\">{$legend}</legend>";
             }
