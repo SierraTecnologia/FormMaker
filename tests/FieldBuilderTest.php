@@ -7,7 +7,7 @@ class FieldBuilderTest extends TestCase
     protected $app;
     protected $builder;
 
-    protected function setUp(): void: void
+    protected function setUp(): void
     {
         parent::setUp();
 

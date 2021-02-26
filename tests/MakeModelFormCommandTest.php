@@ -2,7 +2,7 @@
 
 class MakeModelFormCommandTest extends TestCase
 {
-    protected function setUp(): void: void
+    protected function setUp(): void
     {
         parent::setUp();
 

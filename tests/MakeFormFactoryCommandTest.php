@@ -2,7 +2,7 @@
 
 class MakeFormFactoryCommandTest extends TestCase
 {
-    protected function setUp(): void: void
+    protected function setUp(): void
     {
         parent::setUp();
 
