@@ -56,7 +56,7 @@ class UserSampleCreateForm extends BaseForm
 
 class FormExtensiveBaseTest extends TestCase
 {
-    protected function setUp(): void: void
+    protected function setUp(): void
     {
         parent::setUp();
 
